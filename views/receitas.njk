@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FoodFy</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <img src="/image/logo.png" alt="Imagem Foodfy">
+      <nav class="menu">
+        <a href="/">Home</a>
+        <a href="/sobre">Sobre</a>
+      </nav>
+    </header>
+    <main>
+    
+      <div class="cardapio">
+        {% for item in items %}
+          <div class="card">
+            <img src="{{item.image}}" alt="Imagem de {{item.title}}">
+            <h3>{{item.title}}</h3>
+            <p>por {{item.author}}</p>
+          </div>
+        {% endfor %}
+        
+      </div>
+    </main>
+  </div>
+  <footer>
+    Todos direitos reservados, receitas Foodfy.
+  </footer>
+</body>
+
+{% for item in items %}
+  <div class="modalOverlay">
+    <div class="modal">
+      <img src="{{item.image}}" alt="Imagem de {{item.title}}">
+      <h3>{{item.title}}</h3>
+      <p>por {{item.author}}</p>
+      <a class="closeModal" href="#">Fechar</a>
+    </div>
+  </div>
+{% endfor %}
+
+<script src="script.js"></script>
+</html>
