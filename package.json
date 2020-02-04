@@ -1,0 +1,21 @@
+{
+  "name": "Foodfy",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\">     <img alt=\"Launchbase\" src=\"https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/bootcamp-launchbase.png\" width=\"250px\" /> </h1>",
+  "main": "data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KayoRenato/webFoodfy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KayoRenato/webFoodfy/issues"
+  },
+  "homepage": "https://github.com/KayoRenato/webFoodfy#readme"
+}
