@@ -9,11 +9,12 @@ server.use(express.static('public'))
 server.set("view engine", "njk")
 
 nunjucks.configure("views", {
-  express: server
+  express: server,
+  autoescape: false
 })
 
 server.get('/', (req, res)=> {
-  return res.render('index')
+  return res.render('index', {items: dbFoodfy})
 })
 
 server.get('/receitas', (req, res)=> {
@@ -22,6 +23,10 @@ server.get('/receitas', (req, res)=> {
 
 server.get('/sobre', (req, res)=> {
   return res.render('sobre')
+})
+
+server.use((req,res)=>{
+  res.status(404).render("notFound")
 })
 
 server.listen(5000, () => console.log('server is running'))

@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>FoodFy</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-  <div class="wrapper">
-    <header>
-      <img src="/image/logo.png" alt="">
-      <nav class="menu">
-        <a href="/sobre">Sobre</a>
-        <a href="/receitas">Receitas</a>
-      </nav>
-    </header>
+{% extends "layout.njk" %}
+
+{% block main %}
+
     <section class="hero">
       <div class="content">
         <h1>As melhores receitas</h1>
@@ -26,42 +12,14 @@
     <main>
       <h2>Mais acessadas</h2>
       <div class="cardapio">
-        <div class="card">
-          <img src="/image/asinhas.png" alt="">
-          <h3>Triplo bacon burger</h3>
-          <p>por Jorge Relato</p>
-        </div>
-        <div class="card">
-          <img src="/image/asinhas.png" alt="">
-          <h3>Triplo bacon burger</h3>
-          <p>por Jorge Relato</p>
-        </div>
-        <div class="card">
-          <img src="/image/asinhas.png" alt="">
-          <h3>Triplo bacon burger</h3>
-          <p>por Jorge Relato</p>
-        </div>
-        <div class="card">
-          <img src="/image/asinhas.png" alt="">
-          <h3>Triplo bacon burger</h3>
-          <p>por Jorge Relato</p>
-        </div>
-        <div class="card">
-          <img src="/image/asinhas.png" alt="">
-          <h3>Triplo bacon burger</h3>
-          <p>por Jorge Relato</p>
-        </div>
-        <div class="card">
-          <img src="/image/asinhas.png" alt="">
-          <h3>Triplo bacon burger</h3>
-          <p>por Jorge Relato</p>
-        </div>
+         {% for item in items %}
+          <div class="card">
+            <img src="{{item.image}}" alt="Imagem de {{item.title}}">
+            <h3>{{item.title}}</h3>
+            <p>por {{item.author}}</p>
+          </div>
+        {% endfor %}
       </div>
     </main>
-  </div>
-  <footer>
-    Todos direitos reservados, receitas Foodfy.
-  </footer>
-</body>
 
-</html>
+{% endblock %}
