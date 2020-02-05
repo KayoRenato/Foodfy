@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>FoodFy</title>
+
+  {% block head %}
+    <title>FoodFy</title>
+  {% endblock %}
+
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -13,10 +17,12 @@
     <header>
       <img src="/image/logo.png" alt="">
       <nav class="menu">
+      
       {% block header %}
         <a href="/sobre">Sobre</a>
         <a href="/receitas">Receitas</a>
       {% endblock %}
+
       </nav>
     </header>
 

@@ -197,3 +197,76 @@ color: #999999;
   width: 100%;
 
 }
+
+/* === RECEITA === */
+
+.receita img{
+  width: 100%;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.receita h2{
+ text-align: center;
+ margin: 40px auto 0px;
+}
+
+.receita h3{
+  margin-top: 20px;
+ }
+
+ .receita h3 a{
+  font-size: 18px;
+  color: #999999;
+ }
+
+ .receita h3 a:hover{
+  color: #444444;
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: .7;
+  transition: 200ms;
+ }
+
+ .receita p{
+  margin-top: 20px;
+  line-height: 30px;
+  text-align: justify;
+  margin-bottom: 50px;
+  color: #777777;
+
+ }
+
+ .receita p.author{
+  margin-top: 0px;
+  text-align: center;
+  color: #777777;
+
+ }
+
+.receita ul{
+  margin-top: 20px;
+}
+
+.receita li{
+  margin-left:50px;
+  font-size: 18px;
+  line-height: 30px;
+  color: #777777;
+  text-align: justify;
+  }
+
+  .receita .info {
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 30px;
+    color: #777777;
+    text-align: justify;
+   }
+
+   /* BUTTOM EXIBIR */
+
+   .hide{
+     display: none;
+   }
+

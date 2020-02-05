@@ -10,15 +10,26 @@ server.set("view engine", "njk")
 
 nunjucks.configure("views", {
   express: server,
-  autoescape: false
+  autoescape: false,
+  noCache: true
 })
 
 server.get('/', (req, res)=> {
-  return res.render('index', {items: dbFoodfy})
+
+  return res.render('index', {items: dbFoodfy.slice(0,6)})
 })
 
 server.get('/receitas', (req, res)=> {
   return res.render('receitas', {items: dbFoodfy})
+})
+
+server.get('/receitas/:index', (req, res)=> {
+  const { index: receitaIndex } = req.params
+  const receita = dbFoodfy[receitaIndex]
+
+  if(!receita) return res.status(404).render("notFound")
+
+  return res.render('receita', {item: receita})
 })
 
 server.get('/sobre', (req, res)=> {
