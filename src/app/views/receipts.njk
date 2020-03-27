@@ -1,0 +1,46 @@
+{% extends "layout.njk" %}
+
+  {% block head %}
+    <title>FoodFy - Receitas </title>
+  {% endblock %}
+
+  {% block header %}
+
+    <a href="/">Home</a>
+    <a href="/sobre">Sobre</a>
+
+  {% endblock %}
+
+  {% block main %}
+
+    <main>
+      <div class="cardapio">
+        {% for item in items %}
+          <div class="card">
+            <img src="{{item.image}}"  alt="Imagem de {{item.title}}">
+            <h3><a href="/receitas/{{loop.index0}}">{{item.title}}</a></h3>
+            <p>por {{item.author}}</p>
+            
+          </div>
+        {% endfor %}
+      </div>
+    </main>
+
+  {% endblock %}
+
+  {% block modal %}
+
+    {% for item in items %}
+      <div class="modalOverlay">
+        <div class="modal">
+          <img src="{{item.image}}" alt="Imagem de {{item.title}}">
+          <h3>{{item.title}}</h3>
+          <p>por {{item.author}}</p>
+          <a class="closeModal" href="">Fechar</a>
+        </div>
+      </div>
+   {% endfor %}
+
+    {# <script src="utils/script.js"></script> #}
+
+  {% endblock %}
