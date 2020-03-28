@@ -15,25 +15,15 @@
 <body>
   <div class="wrapper">
 
-    <header>
-      <img src="/images/logo.png" alt="">
-      <nav class="menu">
-      
-      {% block header %}
-        <a href="/sobre">Sobre</a>
-        <a href="/receitas">Receitas</a>
-      {% endblock %}
-
-      </nav>
-    </header>
-
+    {% include "parts/header.njk" %}
+    
     {% block main%}{% endblock %}
    
 
   </div>
-  <footer>
-    Todos direitos reservados, receitas Foodfy.
-  </footer>
+
+{% include "parts/footer.njk" %}
+
 </body>
 
   {% block modal%}{% endblock %}

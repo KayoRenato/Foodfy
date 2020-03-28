@@ -10,7 +10,7 @@
       <h2>{{item.title}}</h2>
       <p class='author'>por {{item.author}}</p>
       <div class="ingre">
-      <h3>Ingredientes - <a class="ingre">Exibir</a></h3>
+      <h3>Ingredientes - <a class="ingre">Mostrar</a></h3>
         <ul class="hide">
           {% for ing in item.ingredients %}
           <li>{{ing}}</li>
@@ -18,7 +18,7 @@
         </ul>
       </div>
      <div class="prep">
-        <h3>Preparo - <a class="prep">Exibir</a></h3>
+        <h3>Preparo - <a class="prep">Mostrar</a></h3>
         <ul class="hide">
         {% for prep in item.preparation %}
           <li>{{prep}}</li>
@@ -28,7 +28,7 @@
 
       {% if item.information %}
         <div class="info">
-        <h3>Informações Adicionais - <a class="info">Exibir</a></h3>
+        <h3>Informações Adicionais - <a class="info">Mostrar</a></h3>
         <p class="hide">{{item.information}}</p>
         </div>
       {% endif %}

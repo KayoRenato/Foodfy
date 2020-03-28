@@ -4,10 +4,7 @@
     <title>FoodFy - Sobre </title>
   {% endblock %}
 
-  {% block header %}
-    <a href="/">Home</a>
-    <a href="/receitas">Receitas</a>
-  {% endblock %}
+  {% import "parts/header.njk" as header %} 
 
   {% block main %}
     <main class="about">

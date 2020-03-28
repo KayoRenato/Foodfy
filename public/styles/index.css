@@ -31,6 +31,11 @@ header img{
   margin-right: 120px;
 }
 
+header a.logo{
+  width: 91px;
+  padding: 8px 16px;
+}
+
 .menu a{
   margin-right: 30px;
   font-size: 16px;
@@ -83,9 +88,15 @@ main h2 {
   grid-gap: 30px 20px;
 }
 
-/* .cardapio .card {
-  width: 100%;
-} */
+.cardapio .card{
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.cardapio .card:hover {
+  border: .5px solid #99999950;
+  box-shadow: 2px 2px 4px 4px  #a0a0a050;
+}
 
 .cardapio img{
   width: 100%;
