@@ -1,0 +1,36 @@
+
+.carte{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px 20px;
+}
+
+.carte .card{
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.carte .card:hover {
+  border: .5px solid var(--color-bord-shadow);
+  box-shadow: 2px 2px 4px 4px var(--color-shadow);
+}
+
+.carte img{
+  width: 100%;
+  height: 160px;
+  border-radius: 15px;
+  object-fit: cover;
+
+}
+
+.carte h3 {
+  margin-top: 20px;
+  font-size: 18px;
+  color: var(--color-first)
+}
+
+.card p{
+  margin-top: 5px;
+  font-size: 14px;
+  color: var(--color-sub-text);
+}

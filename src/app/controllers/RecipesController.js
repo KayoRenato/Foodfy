@@ -4,9 +4,10 @@ module.exports = {
 
   index(req, res) {
     try {
-      return res.render('receipts.njk', {items: dbFoodfy})    
+      return res.render('recipes.njk', {items: dbFoodfy})    
     } catch (err) {
       console.error(err);
+      return res.status(404).render('notFound.njk')
     }
   },
 
@@ -21,6 +22,7 @@ module.exports = {
       
     } catch (err) {
       console.error(err);
+      return res.status(404).render('notFound.njk')
     }
   }
 }

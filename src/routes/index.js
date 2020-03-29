@@ -3,13 +3,15 @@ const routes = express.Router()
 
 const HomeController = require('../app/controllers/HomeController')
 
-const receipts = require('./receipts')
-
+const receipts = require('./recipes')
+const admin = require('./admin')
 
 routes.get('/', HomeController.index)
-routes.get('/sobre', HomeController.about)
+routes.get('/about', HomeController.about)
 
-routes.use('/receitas', receipts)
+routes.use('/recipes', receipts)
+routes.use('/admin', admin)
 
+routes.get('*', (req, res) => {return res.status(404).render('notFound.njk')})
 
 module.exports = routes

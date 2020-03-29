@@ -1,14 +1,27 @@
-<header>
-  <a href="/" class='logo'><img src="/images/logo.png" alt=""></a>
+{% macro render(classes) %}
+  <div class="header {{classes}}">
+    <header>
+      <a href="/" class='logo'>
+        <img 
+          {% if classes == 'public' %}
+            src="/images/logoBlack.png"
+          {% else %}
+            src="/images/logoWhite.png"
+          {% endif %}
+            alt=""
+        >
+      </a>
 
-  <nav class="menu {{ classes }}">
+      <nav class="menu">
+        {{caller()}}
+      </nav>
+  
+    </header>
+  </div>
 
-    <a href="/sobre">Sobre</a>
-    <a href="/receitas">Receitas</a>
+{% endmacro %}
 
-  </nav>
 
-</header>
 
 
 

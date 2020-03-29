@@ -1,5 +1,15 @@
 {% extends "layout.njk" %}
 
+{% import "parts/header.njk" as header %}
+{% import "parts/carte.njk" as carte %}
+
+{% block header %}
+    {% call header.render('public') %}
+      <a href="/about">Sobre</a>
+      <a href="/recipes">Receitas</a>
+    {% endcall %}
+{% endblock %}
+
 {% block main %}
 
     <section class="hero">
@@ -9,19 +19,11 @@
       </div>
     <img src="/images/chef.png" alt="">
     </section>
+
     <main>
-      <h2>Mais acessadas</h2>
-      <div class="cardapio">
-         {% for item in items %}
-            <a href="/receitas/{{loop.index0}}">
-              <div class="card">
-                <img src="{{item.image}}"  alt="Imagem de {{item.title}}">
-                <h3>{{item.title}}</h3>
-                <p>por {{item.author}}</p>
-              </div>
-            </a>
-         {% endfor %}
-      </div>
+      {% call carte.render(items) %}
+        <h2>Mais acessadas</h2>
+      {% endcall %}
     </main>
 
 {% endblock %}

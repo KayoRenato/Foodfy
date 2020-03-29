@@ -11,7 +11,7 @@ for(let link of links){
 
 function checkTopic(link){
   const topic = link.classList.value
-  return (document.querySelector(`.${topic} ul`) || document.querySelector(`.${topic} p`))
+  return (document.querySelector(`.${topic} ul`) || document.querySelector(`.${topic} ol`) || document.querySelector(`.${topic} p`))
 }
 
 function checkText(link){

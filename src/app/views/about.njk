@@ -1,10 +1,17 @@
 {% extends "layout.njk" %}
+
+{% import "parts/header.njk" as header %} 
   
   {% block head %}
     <title>FoodFy - Sobre </title>
   {% endblock %}
 
-  {% import "parts/header.njk" as header %} 
+  {% block header %}
+      {% call header.render('public') %}
+        <a href="/">Home</a>
+        <a href="/recipes">Receitas</a>
+      {% endcall %}
+  {% endblock %}
 
   {% block main %}
     <main class="about">

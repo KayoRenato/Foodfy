@@ -1,11 +1,21 @@
 {% extends "layout.njk" %}
 
+{% import "parts/header.njk" as header %} 
+
   {% block head %}
     <title>FoodFy - {{item.title}} </title>
   {% endblock %}
 
+  {% block header %}
+    {% call header.render('public') %}
+      <a href="/">Home</a>
+      <a href="/recipes">Receitas</a>
+      <a href="/about">Sobre</a>
+    {% endcall %}
+  {% endblock %}
+
   {% block main %}
-    <div class="receita">
+    <div class="recipe">
       <img src="{{item.image}}" alt="Imagem de {{item.title}}">
       <h2>{{item.title}}</h2>
       <p class='author'>por {{item.author}}</p>
@@ -19,11 +29,11 @@
       </div>
      <div class="prep">
         <h3>Preparo - <a class="prep">Mostrar</a></h3>
-        <ul class="hide">
+        <ol class="hide">
         {% for prep in item.preparation %}
           <li>{{prep}}</li>
           {% endfor %}
-        </ul>
+        </ol>
       </div>
 
       {% if item.information %}

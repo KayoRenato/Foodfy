@@ -1,0 +1,16 @@
+{% macro render(items) %}
+  
+  {{caller()}}
+
+  <div class="carte ">
+    {% for item in items %}
+      <a href="/recipes/{{loop.index0}}">
+        <div class="card">
+          <img src="{{item.image}}"  alt="Imagem de {{item.title}}">
+          <h3>{{item.title}}</h3>
+          <p>por {{item.author}}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% endmacro %}

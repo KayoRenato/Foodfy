@@ -13,18 +13,17 @@
 
 </head>
 <body>
-  <div class="wrapper">
 
-    {% include "parts/header.njk" %}
+    {% block header %}{% endblock %}
+
+  <div class="wrapper">
     
     {% block main%}{% endblock %}
    
-
   </div>
 
-{% include "parts/footer.njk" %}
+   {% include "parts/footer.njk" %}
 
 </body>
 
-  {% block modal%}{% endblock %}
 </html>

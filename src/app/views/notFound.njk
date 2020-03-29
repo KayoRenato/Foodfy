@@ -1,16 +1,17 @@
 {% extends "layout.njk" %}
 
+{% import "parts/header.njk" as header %} 
 
 {% block head %}
   <title>FoodFy - Page Not Found </title>
 {% endblock %}
 
 {% block header %}
-
-  <a href="/">Home</a>
-  <a href="/receitas">Receitas</a>
-  <a href="/sobre">Sobre</a>
-
+  {% call header.render('public') %}
+    <a href="/">Home</a>
+    <a href="/recipes">Receitas</a>
+    <a href="/about">Sobre</a>
+  {% endcall %}
 {% endblock %}
 
 {% block main %}
