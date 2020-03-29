@@ -13,8 +13,8 @@ module.exports = {
 
   show(req, res){
     try {
-      const { index: receitaIndex } = req.params
-      const receita = dbFoodfy[receitaIndex]
+      const { index: receitaID } = req.params
+      const receita = dbFoodfy[receitaID]
 
       if(!receita) return res.status(404).render('notFound.njk')
 

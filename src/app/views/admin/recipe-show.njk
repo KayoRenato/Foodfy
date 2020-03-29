@@ -1,0 +1,53 @@
+{% extends "layout.njk" %}
+
+{% import "parts/header.njk" as header %} 
+
+  {% block head %}
+    <title>FoodFy - {{item.title}} </title>
+  {% endblock %}
+
+  {% block header %}
+    {% call header.render(register) %}
+      <a href="/">Home</a>
+      <a href="/recipes">Receitas</a>
+      <a href="/about">Sobre</a>
+      <a href="/admin">Conta</a>
+    {% endcall %}
+  {% endblock %}
+
+  {% block main %}
+    <div class="recipe">
+      <div class="edition">
+        <h3>Receita: {{item.title}}</h3>
+        <a href="/admin/recipes/{{id}}/edit" class="button">Editar Receita</a>
+      </div>
+
+      <img src="{{item.image}}" alt="Imagem de {{item.title}}">
+      <h2>{{item.title}}</h2>
+      <p class='author'>por {{item.author}}</p>
+      <div class="ingre">
+      <h3>Ingredientes</h3>
+        <ul>
+          {% for ing in item.ingredients %}
+          <li>{{ing}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+     <div class="prep">
+        <h3>Preparo</h3>
+        <ol>
+        {% for prep in item.preparation %}
+          <li>{{prep}}</li>
+          {% endfor %}
+        </ol>
+      </div>
+
+      {% if item.information %}
+        <div class="info">
+        <h3>Informações Adicionais</h3>
+        <p>{{item.information}}</p>
+        </div>
+      {% endif %}
+    </div>  
+
+  {% endblock %}

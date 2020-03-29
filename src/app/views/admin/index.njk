@@ -4,10 +4,10 @@
 {% import "parts/carte.njk" as carte %}
 
 {% block header %}
-  {% call header.render('user') %}
+  {% call header.render(register) %}
     <a href="/about">Sobre</a>
     <a href="/recipes">Receitas</a>
-    <a href="/recipes">Conta</a>
+    <a href="/admin">Conta</a>
   {% endcall %}
 {% endblock %}
 

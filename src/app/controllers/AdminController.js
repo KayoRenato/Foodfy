@@ -1,10 +1,11 @@
 const dbFoodfy = require('../../../data/dataCardapio') //vai sair depois da persistência dos dados no DB
+const register = 'user'
 
 module.exports = {
 
   index(req, res) {
     try {
-      return res.render('admin/index.njk', {items: dbFoodfy})    
+      return res.render('admin/index.njk', {register,  items: dbFoodfy })    
     } catch (err) {
       console.error(err);
     }
@@ -12,12 +13,12 @@ module.exports = {
 
   show(req, res){
     try {
-      const { index: receitaIndex } = req.params
-      const receita = dbFoodfy[receitaIndex]
+      const { id } = req.params
+      const receita = dbFoodfy[id]
 
       if(!receita) return res.status(404).render('notFound.njk')
 
-      return res.render('recipe.njk', {item: receita})
+      return res.render('admin/recipe-show.njk', { register, item: receita, id })
       
     } catch (err) {
       console.error(err);
