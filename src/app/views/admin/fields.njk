@@ -1,0 +1,89 @@
+<div>Titulo</div>
+<div class="recipe-title">
+  <input 
+    type="text" 
+    name="title" 
+    value="{{recipe.title}}"
+  >
+</div>
+
+<div>Chefe</div>
+<div class="recipe-title">
+  <input 
+    type="text" 
+    name="author" 
+    value="{{recipe.author}}"
+  >
+</div>
+
+<div>Imagem da Receita</div>
+<div class="recipe-photo">
+  <input 
+    type="text" 
+    name="image"
+    value="{{recipe.image}}"
+  >
+</div>
+
+<div>Ingredientes</div>
+<div id="ingredients">
+  {% if recipe.ingredients %}
+    {% for item in recipe.ingredients %}
+      <div class="ingredient">
+        <input 
+          type="text" 
+          name="ingredients[]"
+          value="{{item}}"
+          placeholder="Insira apenas um ingrediente por vez"
+        >
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="ingredient">
+      <input 
+          type="text" 
+          name="ingredients[]"
+          value=""
+          placeholder="Insira apenas um ingrediente por vez"
+      >
+    </div>
+  {% endif %}
+</div>
+<p onclick="MoreOne('#ingredients','.ingredient')">Adicionar novo ingrediente</p>
+
+<div>Modo de Preparo</div>
+<div id="recipe-way-preparing">
+  {% if recipe.preparation %}
+    {% for item in recipe.preparation %}
+      <div class="task">
+        <input 
+          type="text" 
+          name="preparation"
+          value="{{item}}"
+          placeholder="Insira cada etapa de preparo na sua ordem"
+        >
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="task">
+      <input 
+        type="text" 
+        name="preparation"
+        value=""
+        placeholder="Insira cada etapa de preparo na sua ordem"
+      >
+    </div>
+  {% endif %}
+
+
+</div>
+<p onclick="MoreOne('#recipe-way-preparing','.task')">Adicionar novo passo</p>
+
+<div>Informações Adicionais</div>
+<div class="recipe-additional-info"></div>
+<textarea 
+  name="information"
+  value="{{recipe.information}}"
+>
+</textarea>
+

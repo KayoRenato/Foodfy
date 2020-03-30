@@ -6,14 +6,14 @@
 {% block header %}
   {% call header.render(register) %}
     <a href="/about">Sobre</a>
-    <a href="/recipes">Receitas</a>
+    <a href="/admin/recipes">Receitas</a>
     <a href="/admin">Conta</a>
   {% endcall %}
 {% endblock %}
 
 {% block main %}
   <main>
-    {% call carte.render(items) %}
+    {% call carte.render(items, register) %}
       <h2>Gerenciar Receitas</h2>
     {% endcall %}
   </main>

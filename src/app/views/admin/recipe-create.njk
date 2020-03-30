@@ -1,0 +1,29 @@
+{% extends "layout.njk" %}
+
+{% import "parts/header.njk" as header %} 
+{% import "parts/card.njk" as card %} 
+
+  {% block head %}
+    <title>FoodFy</title>
+  {% endblock %}
+
+  {% block header %}
+    {% call header.render(register) %}
+      <a href="/">Home</a>
+      <a href="/admin/recipes">Receitas</a>
+      <a href="/about">Sobre</a>
+      <a href="/admin">Conta</a>
+    {% endcall %}
+  {% endblock %}
+
+  {% block main %}
+    
+    <form action="/recipes" method="post" enctype="multipart/form-data">
+ 
+      {% call card.render('Criando receita', 'recipe-create', 'admin/fields.njk') %}
+        <button type="submit" class="button" onclick="">Salvar</button>
+      {% endcall %}
+
+    </form>
+
+  {% endblock %}

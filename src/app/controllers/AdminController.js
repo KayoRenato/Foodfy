@@ -26,7 +26,12 @@ module.exports = {
   },
 
   create(req, res){
-
+    try {
+      return res.render('admin/recipe-create.njk', { register })
+      
+    } catch (err) {
+      console.error(err);
+    }
   },
 
   edit(req, res){

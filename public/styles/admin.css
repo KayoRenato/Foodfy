@@ -1,0 +1,56 @@
+.recipe-create .card-header{
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+.recipe-create .card-header h3{
+  margin-top: 0;
+}
+
+.recipe-create .card-content > div{
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+
+.recipe-create .card-content p{
+  font-weight: bold;
+  font-size: 16px;
+  color: #6558C3;
+}
+
+.recipe-create .card-content p:hover{
+  cursor: pointer;
+  color: rgb(150, 139, 235);
+}
+
+.card-content input[type=text]{
+  height: 49px;
+  margin-top: 8px;
+}
+
+.card-content textarea{
+  height: 257px;
+}
+
+.card-content input[type=text],
+.card-content textarea{
+  
+  border: 1px solid var(--color-bord-shadow);
+  border-radius: 4px;
+  width: 100%;
+
+  padding: 16px 16px;
+}
+
+.card-content input[type=text]:focus,
+.card-content textarea:focus{
+  outline: none;
+  border: 2px solid rgb(150, 139, 235);
+  border-radius: 4px;
+
+}
+

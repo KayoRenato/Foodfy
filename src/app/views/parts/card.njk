@@ -1,0 +1,16 @@
+{% macro render(title, classes, include) %}
+  <section class="card {{ classes }}">
+
+    <div class="card-header">
+      <h3> {{ title }}</h3>
+      <div class="button-container">
+        {{ caller() }}
+      </div>
+    </div>
+
+    <div class="card-content">
+     {% include include %}
+    </div>
+  
+  </section>
+{% endmacro %}

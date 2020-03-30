@@ -1,10 +1,14 @@
-{% macro render(items) %}
+{% macro render(items, register) %}
   
   {{caller()}}
 
   <div class="carte ">
     {% for item in items %}
+    {% if register == 'user' %}
+      <a href="/admin/recipes/{{loop.index0}}">
+    {% else %}
       <a href="/recipes/{{loop.index0}}">
+    {% endif %}
         <div class="card">
           <img src="{{item.image}}"  alt="Imagem de {{item.title}}">
           <h3>{{item.title}}</h3>

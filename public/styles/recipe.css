@@ -18,7 +18,8 @@ text-align: center;
 color: var(--color-sub-text);
 }
 
-.recipe h3{
+.recipe h3,
+.recipe-create h3{
   margin-top: 18px;
   font-size: 20px;
   color: var(--color-first);
@@ -83,7 +84,8 @@ transition: 200ms;
   margin-top: 0;
 }
 
-.recipe .edition a{
+.recipe .edition a, 
+.recipe-create .button{
   padding: 8px 20px;
   background-color: #6558C3 ;
   border-radius: 4px;
@@ -97,7 +99,8 @@ transition: 200ms;
   transition: all 400ms;
 }
 
-.recipe .edition a:hover{
+.recipe .edition a:hover,
+.recipe-create .button:hover{
   background-color: rgb(114, 95, 255) ;
   box-shadow: 1px 1px 2px 2px #a0a0a0c0;
 
