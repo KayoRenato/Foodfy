@@ -9,7 +9,7 @@
   margin-top: 0;
 }
 
-.recipe-create .card-content > div{
+.recipe-create .card-content > div:nth-of-type(odd){
   font-weight: bold;
   font-size: 16px;
   margin-top: 20px;
@@ -34,6 +34,8 @@
 
 .card-content textarea{
   height: 257px;
+  margin-top: 8px;
+
 }
 
 .card-content input[type=text],
@@ -54,3 +56,45 @@
 
 }
 
+.carte.admin {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.carte.admin .card {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+
+  align-self: center;
+}
+
+.carte.admin .card .image{
+  padding-top: 56.25%;
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+}
+.carte.admin .card .info{
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+
+}
+.info h3{
+  margin-top: 0;
+}
+
+.info p, .info a{
+  margin-top: 5px;
+}
+
+.carte.admin .info a{
+  color: #6558C3;
+}
+
+.carte.admin .info a:hover{
+  color: rgb(150, 139, 235);
+}
