@@ -1,4 +1,3 @@
-
 .hero{
   width: 940px;
   height: 366px;
@@ -7,7 +6,6 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-
 }
 
 .hero .content {
@@ -30,5 +28,4 @@
 .hero img {
   justify-self: center;
   margin-top: 66px;
-
 }

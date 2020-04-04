@@ -12,6 +12,6 @@ routes.get('/about', HomeController.about)
 routes.use('/recipes', receipts)
 routes.use('/admin', admin)
 
-routes.get('*', (req, res) => {return res.status(404).render('notFound.njk')})
+routes.get('*', (req, res) => {return res.status(404).render('notFound.njk', { register: 'public' })})
 
 module.exports = routes

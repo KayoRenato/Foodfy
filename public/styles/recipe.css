@@ -18,14 +18,13 @@ text-align: center;
 color: var(--color-sub-text);
 }
 
-.recipe h3,
-.recipe-create h3{
+.recipe .content h3{
   margin-top: 18px;
   font-size: 20px;
   color: var(--color-first);
 }
 
- .recipe h3 a{
+.recipe h3 a{
   color: var(--color-sub-text);
 }
 
@@ -72,36 +71,6 @@ transition: 200ms;
   display: none;
 }
 
-.recipe .edition{
-  display: flex;
-  align-items: center;
-  justify-content:space-between;
 
-  margin-bottom: 20px;
-}
 
-.recipe .edition h3{
-  margin-top: 0;
-}
 
-.recipe .edition a, 
-.recipe-create .button{
-  padding: 8px 20px;
-  background-color: #6558C3 ;
-  border-radius: 4px;
-
-  font-weight: bold;
-  font-size: 16px;
-  color: #FFFFFF;
-
-  box-shadow: 1px 1px 3px 3px var(--color-shadow);
-  
-  transition: all 400ms;
-}
-
-.recipe .edition a:hover,
-.recipe-create .button:hover{
-  background-color: rgb(114, 95, 255) ;
-  box-shadow: 1px 1px 2px 2px #a0a0a0c0;
-
-}

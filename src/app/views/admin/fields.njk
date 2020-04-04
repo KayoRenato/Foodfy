@@ -7,7 +7,7 @@
   >
 </div>
 
-<div>Chefe</div>
+<div>Chef</div>
 <div class="recipe-title">
   <input 
     type="text" 
@@ -58,7 +58,7 @@
       <div class="task">
         <input 
           type="text" 
-          name="preparation"
+          name="preparation[]"
           value="{{item}}"
           placeholder="Insira cada etapa de preparo na sua ordem"
         >
@@ -75,15 +75,11 @@
     </div>
   {% endif %}
 
-
 </div>
 <p onclick="MoreOne('#recipe-way-preparing','.task')">Adicionar novo passo</p>
 
 <div>Informações Adicionais</div>
 <div class="recipe-additional-info"></div>
-<textarea 
-  name="information"
-  value="{{recipe.information}}"
->
-</textarea>
+<textarea name="information">{{recipe.information}}</textarea>
+
 

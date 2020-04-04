@@ -17,12 +17,21 @@
   {% endblock %}
 
   {% block main %}
-    <form action="/admin/recipes" method="post">
- 
-      {% call card.render('Criando receita', 'recipe-create' ) %}
+    {% call card.render('Editando receita', 'recipe-content') %}
+
+      <form action="/admin/recipes?_method=DELETE" method="post" name="form1">
+
+        <input type="hidden" name="id" value="{{id}}">
+
+      </form>
+  
+      <form action="/admin/recipes?_method=PUT" method="post" name="form2">
+  
+        <input type="hidden" name="id" value="{{id}}">
+
         {% include "admin/fields.njk" %}
-      {% endcall %}
 
+      </form>
 
-    </form>
+    {% endcall %}
   {% endblock %}

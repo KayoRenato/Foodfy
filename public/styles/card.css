@@ -15,11 +15,13 @@
   box-shadow: 2px 2px 4px 4px var(--color-shadow);
 }
 
-.carte img{
-  width: 100%;
-  height: 160px;
-  border-radius: 15px;
-  object-fit: cover;
+.carte .image{
+  padding-top: 56.25%;
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
 
 }
 
@@ -29,8 +31,67 @@
   color: var(--color-first)
 }
 
+.card-header{
+  display: flex;
+  grid-template-columns: 4fr 1fr;
+  gap: 20px;
+  
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 30px;
+}
+
+.button-container .button{
+  margin-left: 10px;
+}
+
+.card-header h3{
+  font-size: 24px;
+  color: #111111;
+}
+
+.card-header .button {
+  width: 120px;
+  padding: 8px 20px;
+  background-color: #6558C3 ;
+  border-radius: 4px;
+
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  color: #FFFFFF;
+
+  box-shadow: 1px 1px 3px 3px var(--color-shadow);
+  
+  cursor: pointer;
+  transition: all 400ms;
+}
+
+.card-header .button:hover {
+  background-color: rgb(114, 95, 255) ;
+  box-shadow: 1px 1px 2px 2px #a0a0a0c0;
+}
+
+.card-header .button.delete{
+  background-color: #DC4747 ;
+}
+
+.card-header .button.delete:hover {
+  background-color: rgb(238, 93, 93) ;
+  box-shadow: 1px 1px 2px 2px #a0a0a0c0;
+}
+
+
+.card .card-content{
+  /* width: 700px;
+  margin: 0 auto; */
+}
+
 .card p{
   margin-top: 5px;
   font-size: 14px;
   color: var(--color-sub-text);
 }
+
+

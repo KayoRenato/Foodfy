@@ -1,6 +1,7 @@
 {% extends "layout.njk" %}
 
 {% import "parts/header.njk" as header %} 
+{% import "parts/card.njk" as card %} 
 
   {% block head %}
     <title>FoodFy - {{item.title}} </title>
@@ -16,38 +17,46 @@
   {% endblock %}
 
   {% block main %}
-    <div class="recipe">
-      <div class="edition">
-        <h3>Receita: {{item.title}}</h3>
-        <a href="/admin/recipes/{{id}}/edit" class="button">Editar Receita</a>
-      </div>
 
-      <img src="{{item.image}}" alt="Imagem de {{item.title}}">
-      <h2>{{item.title}}</h2>
-      <p class='author'>por {{item.author}}</p>
-      <div class="ingre">
-      <h3>Ingredientes</h3>
-        <ul>
-          {% for ing in item.ingredients %}
-          <li>{{ing}}</li>
-          {% endfor %}
-        </ul>
-      </div>
-     <div class="prep">
-        <h3>Preparo</h3>
-        <ol>
-        {% for prep in item.preparation %}
-          <li>{{prep}}</li>
-          {% endfor %}
-        </ol>
-      </div>
-
-      {% if item.information %}
-        <div class="info">
-        <h3>Informações Adicionais</h3>
-        <p>{{item.information}}</p>
+    {% call card.render( item.title, 'recipe-show', id) %}
+      
+      <div class="recipe">
+        <div class="head">
+          <img src="{{item.image}}" alt="Imagem de {{item.title}}">
+          <h2>{{item.title}}</h2>
+          <p class='author'>por {{item.author}}</p>
         </div>
-      {% endif %}
-    </div>  
+
+        <div class="content">
+          <div class="ingre">
+            <h3>Ingredientes</h3>
+              <ul>
+                {% for ing in item.ingredients %}
+                <li>{{ing}}</li>
+                {% endfor %}
+              </ul>
+          </div>
+
+          <div class="prep">
+            <h3>Preparo</h3>
+            <ol>
+            {% for prep in item.preparation %}
+              <li>{{prep}}</li>
+              {% endfor %}
+            </ol>
+          </div>
+
+          {% if item.information %}
+            <div class="info">
+              <h3>Informações Adicionais</h3>
+              <p>{{item.information}}</p>
+            </div>
+          {% endif %}
+              
+        </div>  
+
+      </div>  
+      
+    {% endcall %}
 
   {% endblock %}

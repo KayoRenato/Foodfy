@@ -1,13 +1,15 @@
 const dbFoodfy = require('../../../data/dataCardapio') //vai sair depois da persistência dos dados no DB
 
+const register = 'public' //será substituido per session posteriormente
+
 module.exports = {
 
   index(req, res) {
     try {
-      return res.render('recipes.njk', {items: dbFoodfy})    
+      return res.render('recipes.njk', {items: dbFoodfy, register})    
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk')
+      return res.status(404).render('notFound.njk', {register})
     }
   },
 
@@ -16,13 +18,13 @@ module.exports = {
       const { index: receitaID } = req.params
       const receita = dbFoodfy[receitaID]
 
-      if(!receita) return res.status(404).render('notFound.njk')
+      if(!receita) return res.status(404).render('notFound.njk', {register})
 
-      return res.render('recipe.njk', {item: receita})
+      return res.render('recipe.njk', {item: receita, register})
       
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk')
+      return res.status(404).render('notFound.njk', {register})
     }
   }
 }

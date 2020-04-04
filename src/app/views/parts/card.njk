@@ -1,15 +1,30 @@
-{% macro render(title, classes, include) %}
+{% macro render(title, classes, id ) %}
   <section class="card {{ classes }}">
 
     <div class="card-header">
-      <h3> {{ title }}</h3>
-      <div class="button-container">
-        {{ caller() }}
-      </div>
+      {% if 'Edi' in title %}
+        <h3> {{ title }}</h3>
+        <div class="button-container">
+          <input class="button delete" value="Deletar" onclick="document.form1.submit()">
+          <input class="button" value="Salvar" onclick="document.form2.submit()">
+       </div>
+      {% elif 'Cri' in title %}
+        <h3> {{ title }}</h3>
+        <div class="button-container">
+          <input class="button" value="Salvar" onclick="document.form1.submit()">
+        </div>
+      {% elif 'show' in classes %}
+        <h3>Receita: {{ title }}</h3>
+        <div class="button-container">
+          <a href="{{id}}/edit" class="button">Editar Receita</a>
+        </div>
+      {% else %}
+      {% endif %}
+
     </div>
 
     <div class="card-content">
-     {% include include %}
+        {{ caller() }}
     </div>
   
   </section>

@@ -1,20 +1,14 @@
-.recipe-create .card-header{
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-}
-
 .recipe-create .card-header h3{
   margin-top: 0;
+  font-size: 24px;
 }
 
-.recipe-create .card-content > div:nth-of-type(odd){
+.recipe-create .card-content > div:nth-of-type(odd),
+.recipe-content .card-content form > div:nth-of-type(odd){
   font-weight: bold;
   font-size: 16px;
   margin-top: 20px;
 }
-
 
 .recipe-create .card-content p{
   font-weight: bold;
@@ -56,20 +50,20 @@
 
 }
 
-.carte.admin {
+.carte.user {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
-.carte.admin .card {
+.carte.user .card {
   display: grid;
   grid-template-columns: 170px 1fr;
 
   align-self: center;
 }
 
-.carte.admin .card .image{
+.carte.user .card .image{
   padding-top: 56.25%;
 
   background-size: cover;
@@ -77,7 +71,7 @@
   background-repeat: no-repeat;
   border-radius: 8px;
 }
-.carte.admin .card .info{
+.carte.user .card .info{
   display: flex;
   flex-direction: column;
   margin-left: 8px;
@@ -87,14 +81,20 @@
   margin-top: 0;
 }
 
-.info p, .info a{
+.info p{
   margin-top: 5px;
+  margin-bottom: 10px;
 }
 
-.carte.admin .info a{
+.carte.user .info a{
   color: #6558C3;
 }
 
-.carte.admin .info a:hover{
+.carte.user .info a:hover{
   color: rgb(150, 139, 235);
+}
+
+.recipe-create .button.delete {
+  background-color: #DC4747;
+  margin-right: 10px;
 }
