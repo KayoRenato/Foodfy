@@ -17,12 +17,9 @@
   {% endblock %}
 
   {% block main %}
-    <form action="/admin/recipes" method="post">
- 
       {% call card.render('Criando receita', 'recipe-create' ) %}
-        {% include "admin/fields.njk" %}
+        <form action="/admin/recipes" method="post" name="form1">
+          {% include "admin/fields.njk" %}
+        </form>
       {% endcall %}
-
-
-    </form>
   {% endblock %}

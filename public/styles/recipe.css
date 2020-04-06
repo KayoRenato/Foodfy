@@ -62,6 +62,7 @@ transition: 200ms;
   margin-top: 20px;
 
   font-size: 18px;
+  font-weight: normal;
   color: var(--color-sub-text);
   line-height: 30px;
   text-align: justify;

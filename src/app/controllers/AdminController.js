@@ -45,28 +45,47 @@ module.exports = {
   edit(req, res){
     try {
       const { id } = req.params
-      const recipe = dbFoodfy2.recipes[id]
+      const recipe = dbFoodfy2.recipes[id]      
 
-      if(!recipe) return res.status(404).render('notFound.njk')
+      if(!recipe) return res.status(404).render('notFound.njk', { register })
 
       return res.render('admin/recipe-edit.njk', { register, recipe, id })
       
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('notFound.njk', { register })
     }
   },
 
   post(req, res){
     try {
-      let { title, author, image, ingredients, preparation, information } = req.body
 
-      const recipe ={
+      let { title, author, image, ingredients, preparation, information } = req.body
+      
+      const keys = Object.keys(req.body)
+
+      for(key of keys){
+        if(req.body[key] == "" || req.body[key].length == 0 && key != 'information')
+         return res.render('admin/recipe-create.njk', { register })
+
+      }
+
+      function isString(item){
+        if(typeof item == 'string')
+          return item.split(" ")
+        else
+          return item
+      }
+
+      ingredients = isString(ingredients)
+      preparation = isString(preparation)
+
+      const recipe = {
         title,
         author,
         image,
-        ingredients,
-        preparation,
+        ingredients: ingredients.filter( item => item != ''),
+        preparation: preparation.filter( item => item != ''),
         information: information.trim()
       }
 
@@ -88,17 +107,24 @@ module.exports = {
   put(req, res){
     try {
       let { id ,title, author, image, ingredients, preparation, information } = req.body
-
+      
+      const keys = Object.keys(req.body)
+      
+      for(key of keys){
+        if(req.body[key] == "" || req.body[key].length == 0 && key != 'information') 
+          return res.redirect(`/admin/recipes/${id}/edit`)
+      }
+      
       let recipe = dbFoodfy2.recipes[id]
 
-      recipe ={
+      recipe = {
         ...recipe,
         title,
         author,
         image,
-        ingredients,
-        preparation,
-        information:  information.trim()
+        ingredients: ingredients.filter( item => item != ''),
+        preparation: preparation.filter( item => item != ''),
+        information: information.trim()
 
       }
 
@@ -120,15 +146,20 @@ module.exports = {
   delete(req, res){
     try {
       const { id } = req.body
-      console.log(id)
 
-      const recipesFiltered = dbFoodfy2.recipes.filter((item) => {
+      const recipesFiltered = dbFoodfy2.recipes.filter(item => {
         return dbFoodfy2.recipes[id] != item;
       })
 
-      console.log(recipesFiltered)
+      dbFoodfy2.recipes = recipesFiltered
 
-      return res.send('ok')
+      fs.writeFile("data/data.json", JSON.stringify(dbFoodfy2, null, 2), (err) => {
+        if(err) return res.send("Write error")
+
+      })
+
+      return res.render('admin/index.njk', {register,  items: dbFoodfy })    
+
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})

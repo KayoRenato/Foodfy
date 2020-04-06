@@ -1,22 +1,22 @@
-.recipe-create .card-header h3{
+.card-header h3{
   margin-top: 0;
   font-size: 24px;
 }
 
-.recipe-create .card-content > div:nth-of-type(odd),
-.recipe-content .card-content form > div:nth-of-type(odd){
+
+.card-content form > div:nth-of-type(odd){
   font-weight: bold;
   font-size: 16px;
   margin-top: 20px;
 }
 
-.recipe-create .card-content p{
+.card-content p{
   font-weight: bold;
   font-size: 16px;
   color: #6558C3;
 }
 
-.recipe-create .card-content p:hover{
+.card-content p:hover{
   cursor: pointer;
   color: rgb(150, 139, 235);
 }
