@@ -4,25 +4,41 @@ const dbFoodfy = require('../../../data/dataCardapio') //vai sair depois da pers
 const dbFoodfy2 = require('../../../data/data.json') //vai sair depois da persistência dos dados no DB
 
 const RecipeModel = require('../models/RecipesModel')
+const ChefsModel = require('../models/ChefsModel')
 
 const register = 'user'
 
-module.exports = {
+function isString(item){
+  if(typeof item == 'string')
+    return item.split(" ")
+  else
+    return item
+}
 
-  index(req, res) {
+module.exports = {
+ //depois transferir consultado de dados do arquivo js para banco de dados postgre
+  recipes(req, res) {
     try {
-      return res.render('admin/index.njk', {register,  items: dbFoodfy })    
+      return res.render('admin/recipes.njk', {register,  items: dbFoodfy })    
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})
 
     }
   },
-
-  show(req, res){
+  recipeCreate(req, res){
+    try {
+      return res.render('admin/recipe-create.njk', { register })
+      
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('notFound.njk', {register})
+    }
+  },
+  async recipeShow(req, res){
     try {
       const { id } = req.params
-      const recipe = dbFoodfy[id]
+      const recipe = await RecipeModel.find(id)
 
       if(!recipe) return res.status(404).render('notFound.njk', {register})
 
@@ -33,21 +49,10 @@ module.exports = {
       return res.status(404).render('notFound.njk', {register})
     }
   },
-
-  create(req, res){
-    try {
-      return res.render('admin/recipe-create.njk', { register })
-      
-    } catch (err) {
-      console.error(err);
-      return res.status(404).render('notFound.njk', {register})
-    }
-  },
-
-  edit(req, res){
+  async recipeEdit(req, res){
     try {
       const { id } = req.params
-      const recipe = dbFoodfy2.recipes[id]      
+      const recipe = await RecipeModel.find(id)
 
       if(!recipe) return res.status(404).render('notFound.njk', { register })
 
@@ -58,8 +63,7 @@ module.exports = {
       return res.status(404).render('notFound.njk', { register })
     }
   },
-
-  async post(req, res){
+  async recipePost(req, res){
     try {
 
       let { title, author, image, ingredients, preparation, information } = req.body
@@ -72,17 +76,10 @@ module.exports = {
 
       }
 
-      function isString(item){
-        if(typeof item == 'string')
-          return item.split(" ")
-        else
-          return item
-      }
-
       ingredients = isString(ingredients)
       preparation = isString(preparation)
 
-      RecipeModel.saveCreate({
+      await RecipeModel.saveCreate({
         title,
         // author,
         image,
@@ -98,10 +95,9 @@ module.exports = {
       return res.status(404).render('notFound.njk', {register})
     }
   },
-
-  put(req, res){
+  async recipePut(req, res){
     try {
-      let { id ,title, author, image, ingredients, preparation, information } = req.body
+      let { id ,title, image, ingredients, preparation, information } = req.body
       
       const keys = Object.keys(req.body)
       
@@ -110,55 +106,59 @@ module.exports = {
           return res.redirect(`/admin/recipes/${id}/edit`)
       }
       
-      let recipe = dbFoodfy2.recipes[id]
+      ingredients = isString(ingredients)
+      ingredients = ingredients.filter( item => item != '')
+      
+      preparation = isString(preparation)
+      preparation = preparation.filter( item => item != '')
 
-      recipe = {
-        ...recipe,
-        title,
-        author,
-        image,
-        ingredients: ingredients.filter( item => item != ''),
-        preparation: preparation.filter( item => item != ''),
-        information: information.trim()
+      information = information.trim()
 
-      }
+      await RecipeModel.saveUpdate(id, {title, image, ingredients, preparation, information })
 
-      dbFoodfy2.recipes[id] = recipe
-
-      fs.writeFile("data/data.json", JSON.stringify(dbFoodfy2, null, 2), (err) => {
-        if(err) return res.send("Write error")
-
-      })
-
-      return res.redirect(`/admin/recipes/${id}/edit`)
+      return res.redirect(`/admin/recipes/${id}`)
       
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})
     }
   },
-
-  delete(req, res){
+  recipeDelete(req, res){
     try {
       const { id } = req.body
 
-      const recipesFiltered = dbFoodfy2.recipes.filter(item => {
-        return dbFoodfy2.recipes[id] != item;
-      })
+      RecipeModel.delete(id)
 
-      dbFoodfy2.recipes = recipesFiltered
-
-      fs.writeFile("data/data.json", JSON.stringify(dbFoodfy2, null, 2), (err) => {
-        if(err) return res.send("Write error")
-
-      })
-
-      return res.render('admin/index.njk', {register,  items: dbFoodfy })    
+      return res.render('admin/index.njk', {register,  items: dbFoodfy })     //substituir depois por redirect, quando o session for implementado
 
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})
     }
-  }
+  },
 
+
+  async chefs(req, res){
+    const chefs = await ChefsModel.findAll()
+
+    try {
+      return res.render('admin/chefs.njk', {register , chefs })
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('notFound.njk', {register})
+    }
+  },
+  chefCreate(req,res){
+  },
+  async chefShow(req,res){
+  },
+  chefEdit(req,res){
+  },
+  async chefPost(req,res){
+  },
+  async chefPut(req,res){
+  },
+  chefDelete(req,res){
+  }
+  
 }

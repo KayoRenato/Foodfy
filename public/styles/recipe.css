@@ -1,7 +1,10 @@
-.recipe img{
-  width: 100%;
-  border-radius: 15px;
-  object-fit: cover;
+.recipe .image{
+  padding-top: 56.25%;
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
 }
 
 .recipe h2{

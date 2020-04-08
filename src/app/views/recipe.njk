@@ -8,9 +8,9 @@
 
   {% block header %}
     {% call header.render(register) %}
-      <a href="/">Home</a>
-      <a href="/recipes">Receitas</a>
-      <a href="/about">Sobre</a>
+      <a href="/">HOME</a>
+      <a href="/recipes">RECEITAS</a>
+      <a href="/about">SOBRE</a>
     {% endcall %}
   {% endblock %}
 
@@ -19,7 +19,10 @@
     <div class="recipe">
 
       <div class="head">
-        <img src="{{item.image}}" alt="Imagem de {{item.title}}">
+        <div 
+          class="image"
+          style="background-image: url({{item.image}})"
+        ></div>
         <h2>{{item.title}}</h2>
         <p class='author'>por {{item.author}}</p>
       </div>

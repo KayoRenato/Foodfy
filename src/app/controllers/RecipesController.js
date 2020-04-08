@@ -3,7 +3,7 @@ const dbFoodfy = require('../../../data/dataCardapio') //vai sair depois da pers
 const register = 'public' //será substituido per session posteriormente
 
 module.exports = {
-
+  //depois transferir consultado de dados do arquivo js para banco de dados postgre
   index(req, res) {
     try {
       return res.render('recipes.njk', {items: dbFoodfy, register})    

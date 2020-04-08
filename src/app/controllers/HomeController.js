@@ -1,7 +1,7 @@
 const register = 'public'
 
 module.exports = {
-
+ //depois transferir consultado de dados do arquivo js para banco de dados postgre
   index(req, res){
     const dbFoodfy = require('../../../data/dataCardapio') //vai sair depois da persistência dos dados no DB
 
