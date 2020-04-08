@@ -3,6 +3,8 @@ const fs = require('fs')
 const dbFoodfy = require('../../../data/dataCardapio') //vai sair depois da persistência dos dados no DB
 const dbFoodfy2 = require('../../../data/data.json') //vai sair depois da persistência dos dados no DB
 
+const RecipeModel = require('../models/RecipesModel')
+
 const register = 'user'
 
 module.exports = {
@@ -57,7 +59,7 @@ module.exports = {
     }
   },
 
-  post(req, res){
+  async post(req, res){
     try {
 
       let { title, author, image, ingredients, preparation, information } = req.body
@@ -80,20 +82,13 @@ module.exports = {
       ingredients = isString(ingredients)
       preparation = isString(preparation)
 
-      const recipe = {
+      RecipeModel.saveCreate({
         title,
-        author,
+        // author,
         image,
         ingredients: ingredients.filter( item => item != ''),
         preparation: preparation.filter( item => item != ''),
         information: information.trim()
-      }
-
-      dbFoodfy2.recipes.push(recipe)
-
-      fs.writeFile("data/data.json", JSON.stringify(dbFoodfy2, null, 2), (err) => {
-        if(err) return res.send("Write file error")
-
       })
 
       return res.redirect('/admin/recipes')
