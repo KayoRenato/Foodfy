@@ -13,10 +13,15 @@
         <div class="button-container">
           <input class="button" value="Salvar" onclick="document.form1.submit()">
         </div>
-      {% elif 'show' in classes %}
+      {% elif 'recipe-show' == classes %}
         <h3>Receita: {{ title }}</h3>
         <div class="button-container">
           <a href="{{id}}/edit" class="button">Editar Receita</a>
+        </div>
+      {% elif 'chef-show' == classes %}
+        <h3>Chef: {{ title }}</h3>
+        <div class="button-container">
+          <a href="{{id}}/edit" class="button">Editar Chef</a>
         </div>
       {% else %}
       {% endif %}

@@ -43,12 +43,10 @@ header {
 
 .header.public{
   background-color: var(--color-second);
-  margin-bottom: 30px;
 }
 
 .header.user{
   background-color: var(--color-first);
-  margin-bottom: 30px;
 }
 
 footer{
@@ -66,8 +64,7 @@ a {
 .wrapper {
   width: 940px;
 
-  margin: 0 auto;
-  margin-bottom: 40px;
+  margin: 50px auto;
 }
 
 header img{
@@ -95,7 +92,6 @@ header a.logo{
 
 main h2 {
   font-size: 24px;
-  margin-top: 40px;
   margin-bottom: 30px;
 }
 

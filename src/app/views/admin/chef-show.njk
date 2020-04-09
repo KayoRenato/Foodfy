@@ -1,0 +1,42 @@
+{% extends "layout.njk" %}
+
+{% import "parts/header.njk" as header %} 
+{% import "parts/carte.njk" as carte %}
+{% import "parts/card.njk" as card %} 
+
+  {% block head %}
+    <title>FoodFy</title>
+  {% endblock %}
+
+  {% block header %}
+    {% call header.render(register) %}
+      <a href="/admin/recipes">RECEITAS</a>
+      <a href="/admin/chefs">CHEFS</a>  
+    {% endcall %}
+  {% endblock %}
+
+  {% block main %}
+
+    {% call card.render( chef.name, 'chef-show', id) %}
+      
+      <div class="chef">
+        <div class="head">
+         <div 
+            class="image"
+            style="background-image: url({{chef.avatar_url}})"
+          ></div>
+          <h2>{{chef.name}}</h2>
+          <p class='contribution'> {{chef.recipes_qnt}} receitas</p>
+        </div>
+
+        <div class="recipes_chef content">
+          {% call carte.render(recipes_chef, register ) %}
+            <h2>Receitas</h2>
+          {% endcall %}
+        </div>  
+
+      </div>  
+      
+    {% endcall %}
+
+  {% endblock %}

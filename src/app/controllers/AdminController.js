@@ -129,7 +129,7 @@ module.exports = {
 
       RecipeModel.delete(id)
 
-      return res.render('admin/index.njk', {register,  items: dbFoodfy })     //substituir depois por redirect, quando o session for implementado
+      return res.redirect('/admin/recipes') 
 
     } catch (err) {
       console.error(err);
@@ -139,9 +139,8 @@ module.exports = {
 
 
   async chefs(req, res){
-    const chefs = await ChefsModel.findAll()
-
     try {
+      const chefs = await ChefsModel.findAll()
       return res.render('admin/chefs.njk', {register , chefs })
     } catch (err) {
       console.error(err);
@@ -149,16 +148,94 @@ module.exports = {
     }
   },
   chefCreate(req,res){
+    try {
+      return res.render('admin/chef-create.njk', { register })
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('notFound.njk', {register})
+    }
   },
   async chefShow(req,res){
+    try {
+      const { id } = req.params
+      const chef = await ChefsModel.find(id)
+      const recipes_chef = await RecipeModel.findAll({WHERE: {chef_id: id}})
+
+      return res.render('admin/chef-show.njk', {id, chef, recipes_chef, register})
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('notFound.njk', {register})
+    }
   },
-  chefEdit(req,res){
+  async chefEdit(req,res){
+    try {
+      const { id } = req.params
+      const chef = await ChefsModel.find(id)
+
+      return res.render('admin/chef-edit.njk', {id, chef, register})
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('notFound.njk', {register})
+    }
   },
   async chefPost(req,res){
+    try {
+      const { name, avatar_url } = req.body
+
+      const keys = Object.keys(req.body)
+
+      for(key of keys){
+        if(req.body[key] == "")
+          return res.render('admin/chef-create.njk', { register })
+      }
+
+      await ChefsModel.saveCreate({name, avatar_url})
+      
+      return res.redirect('/admin/chefs')
+
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('notFound.njk', {register})
+    }
   },
   async chefPut(req,res){
+    try {
+      const {id, name, avatar_url} = req.body
+
+      const keys = Object.keys(req.body)
+
+      const chef ={
+        name,
+        avatar_url
+      }
+
+      for(key of keys){
+        if(req.body[key] == "")
+      return res.render('admin/chef-edit.njk', {id, chef, register})
+      }
+
+      await ChefsModel.saveUpdate(id, chef)
+
+      return res.redirect(`/admin/chefs/${id}`)
+
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('notFound.njk', {register})
+    }
+    
   },
-  chefDelete(req,res){
+  async chefDelete(req,res){
+    try {
+      const { id } = req.body
+
+      await ChefsModel.delete(id)
+
+      return res.redirect('/admin/chefs')
+
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('notFound.njk', {register})
+    }
   }
   
 }
