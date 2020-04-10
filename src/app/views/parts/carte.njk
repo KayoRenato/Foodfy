@@ -15,7 +15,7 @@
 
           <div class="info">
             <h3>{{item.title}}</h3>
-            <p>por {{item.author or item.chef_id}}</p>
+            <p>por {{item.author or item.chef_name}}</p>
               {% if classes == 'user' %}
                 <a href="/admin/recipes/{{item.id or loop.index0}}">Visualizar</a>                   
               {% endif %}

@@ -71,7 +71,7 @@ module.exports = {
       const keys = Object.keys(req.body)
 
       for(key of keys){
-        if(req.body[key] == "" || req.body[key].length == 0 && key != 'information')
+        if(key != 'information' && req.body[key] == "")
          return res.render('admin/recipe-create.njk', { register })
 
       }
@@ -102,8 +102,9 @@ module.exports = {
       const keys = Object.keys(req.body)
       
       for(key of keys){
-        if(req.body[key] == "" || req.body[key].length == 0 && key != 'information') 
+        if(key != 'information' && req.body[key] == ""){
           return res.redirect(`/admin/recipes/${id}/edit`)
+        }
       }
       
       ingredients = isString(ingredients)
@@ -111,6 +112,10 @@ module.exports = {
       
       preparation = isString(preparation)
       preparation = preparation.filter( item => item != '')
+
+      if(!ingredients.length || !preparation.length ){
+          return res.redirect(`/admin/recipes/${id}/edit`)
+      }
 
       information = information.trim()
 
@@ -158,10 +163,11 @@ module.exports = {
   async chefShow(req,res){
     try {
       const { id } = req.params
-      const chef = await ChefsModel.find(id)
-      const recipes_chef = await RecipeModel.findAll({WHERE: {chef_id: id}})
+      const chef = await ChefsModel.totalRecipes(id)
+      const recipes_chef = await RecipeModel.chefName(id)
 
       return res.render('admin/chef-show.njk', {id, chef, recipes_chef, register})
+      
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})
