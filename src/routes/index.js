@@ -7,6 +7,7 @@ const receipts = require('./recipes')
 const admin = require('./admin')
 
 routes.get('/', HomeController.index)
+routes.get('/chefs', HomeController.chefs)
 routes.get('/about', HomeController.about)
 
 routes.use('/recipes', receipts)

@@ -1,12 +1,16 @@
 
 .about h1 {
   font-size: 24px;
-
+  margin-bottom: 0;
 }
 
 .about p{
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 18px;
   color: var(--color-first);
   line-height: 28px;
+}
+
+.about h1:nth-child(n+2){
+  margin-top: 30px;
 }

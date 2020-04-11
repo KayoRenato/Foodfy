@@ -15,6 +15,18 @@
       <nav class="menu">
         {{caller()}}
       </nav>
+
+    <div class="search">
+      <form action="/recipes/search" method="get">
+        <i class="fas fa-search fa-sm"></i>
+        <input 
+          type="text"
+          name="filter"
+          placeholder="Buscar uma receita"  
+        >
+        <button class="button" type="submit">Buscar</button>
+      </form>
+    </div>
   
     </header>
   </div>

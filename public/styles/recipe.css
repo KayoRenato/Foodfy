@@ -14,11 +14,11 @@
 }
 
 .recipe p.author{
-margin-top: 0px;
+  margin-top: 0px;
 
-font-size: 20px;
-text-align: center;
-color: var(--color-sub-text);
+  font-size: 20px;
+  text-align: center;
+  color: var(--color-sub-text);
 }
 
 .recipe .content h3{

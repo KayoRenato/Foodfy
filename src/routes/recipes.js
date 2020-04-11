@@ -4,6 +4,7 @@ const routes = express.Router()
 const ReceiptsController = require("../app/controllers/RecipesController")
 
 routes.get('/', ReceiptsController.index)
+routes.get('/search', ReceiptsController.search)
 routes.get('/:index', ReceiptsController.show)
 
 module.exports = routes

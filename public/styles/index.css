@@ -36,9 +36,14 @@ body{
 header {
   max-width: 940px;
   display: grid;
-  grid-template-columns: 210px 1fr;
+  grid-template-columns: 210px 1fr 350px;
   margin: 27px auto;
   align-items: center;
+}
+
+header .search{
+  justify-self: end;
+
 }
 
 .header.public{
@@ -106,4 +111,55 @@ main h2 {
 }
 
 
+header .button {
+  width: 120px;
+  padding: 8px 20px;
+  background-color: #6558C3 ;
+  border-radius: 4px;
+
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  color: #FFFFFF;
+
+  box-shadow: 0px 1px 2px .1;
+  
+  cursor: pointer;
+  transition: all 400ms;
+
+  margin-left: 4px;
+}
+
+header .button:hover {
+  background-color: rgb(114, 95, 255);
+  box-shadow: 0px 1px 2px .1;
+}
+
+header input[type=text]{
+  width: 200px;
+  padding: 8px 0 8px 25px;
+  
+  border: 1px solid var(--color-bord-shadow);
+  border-radius: 4px;
+  
+  box-sizing: border-box;
+}
+
+header input[type=text]:focus{
+  outline: none;
+  border: 2px solid rgb(114, 95, 255);
+  border-radius: 4px;
+
+  box-sizing: border-box;
+}
+
+header div{
+  position: relative;
+}
+
+header i{
+  position: relative;
+  left: 23px;
+  color: rgb(163, 163, 163);
+}
 

@@ -1,0 +1,42 @@
+{% extends "layout.njk" %}
+
+{% import "parts/header.njk" as header %}
+
+{% block header %}
+  {% call header.render(register) %}
+    <a href="/recipes">RECEITAS</a>
+    <a href="/chefs">CHEFS</a>
+    <a href="/about">SOBRE</a>
+  {% endcall %}
+{% endblock %}
+
+{% block main %}
+  <main>
+    <div class="chefs list">
+      {%for chef in chefs %}
+        {# <a href="/chefs/{{chef.id}}">                   #}
+          <div class="card">
+            <div 
+              class="image"
+              style="background-image: url({{chef.avatar_url}})"
+            ></div>
+
+            <div class="info">
+              <h3>{{chef.name}}</h3>
+              <p>
+                {% if chef.total_recipes > 1 %}
+                  {{chef.total_recipes}} receitas
+                {% elif chef.total_recipes == 1  %}
+                  {{chef.total_recipes}} receita
+                {% else %}
+                  Nenhuma receita cadastrada
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        {# </a>  #}
+      {% endfor %}
+     </div>
+  </main>
+
+{% endblock %}

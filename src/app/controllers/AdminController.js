@@ -38,7 +38,7 @@ module.exports = {
   async recipeShow(req, res){
     try {
       const { id } = req.params
-      const recipe = await RecipeModel.find(id)
+      const recipe = await RecipeModel.recipeSigned(id)
 
       if(!recipe) return res.status(404).render('notFound.njk', {register})
 
@@ -164,7 +164,7 @@ module.exports = {
     try {
       const { id } = req.params
       const chef = await ChefsModel.totalRecipes(id)
-      const recipes_chef = await RecipeModel.chefName(id)
+      const recipes_chef = await RecipeModel.recipesSignedBy(id)
 
       return res.render('admin/chef-show.njk', {id, chef, recipes_chef, register})
       
