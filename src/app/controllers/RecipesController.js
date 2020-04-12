@@ -1,26 +1,27 @@
-const dbFoodfy = require('../../../data/dataCardapio') //vai sair depois da persistência dos dados no DB
 const RecipeModel = require('../models/RecipesModel')
 
 const register = 'public' //será substituido per session posteriormente
 
 module.exports = {
   //depois transferir consultado de dados do arquivo js para banco de dados postgre
-  index(req, res) {
+  async index(req, res) {
     try {
-      return res.render('recipes.njk', {items: dbFoodfy, register})    
+      const recipes =  await RecipeModel.recipesSignedBy()
+
+      return res.render('recipes.njk', {items: recipes, register})    
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})
     }
   },
-  show(req, res){
+  async show(req, res){
     try {
-      const { index: receitaID } = req.params
-      const receita = dbFoodfy[receitaID]
+      const { id } = req.params
+      const recipe = await RecipeModel.recipeSigned(id)
 
-      if(!receita) return res.status(404).render('notFound.njk', {register})
+      if(!recipe) return res.status(404).render('notFound.njk', {register})
 
-      return res.render('recipe.njk', {item: receita, register})
+      return res.render('recipe.njk', {item: recipe, register})
       
     } catch (err) {
       console.error(err);

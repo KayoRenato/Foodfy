@@ -5,31 +5,46 @@ BaseModel.init({ table: 'recipes' })
 
 module.exports = {
   ...BaseModel,
-  async recipesSignedBy(id){
-    const results = await db.query(
-      `
-      SELECT recipes.*, chefs.name as chef_name FROM recipes
-      LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-      WHERE chefs.id = '${id}'
-      `
-    )
+  async recipesSignedBy(idChef){
+    try {
+      let query =
+        `
+        SELECT recipes.*, chefs.name as chef_name FROM recipes
+        LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
+        `
+        
+      if(idChef){
+        query +=
+        `
+        WHERE chefs.id = '${idChef}'    
+        `
+      }
 
-    return results.rows
+      const results = await db.query(query)
+  
+      return results.rows
+    } catch (err) {
+      console.error(err);
+    }
   },
   async recipeSigned(id){
-    const results = await db.query(
-      `
-      SELECT recipes.*, chefs.name as chef_name FROM recipes
-      LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-      WHERE recipes.id = '${id}'
-      `
-    )
-
-    return results.rows[0]
+    try {
+      const results = await db.query(
+        `
+        SELECT recipes.*, chefs.name as chef_name FROM recipes
+        LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
+        WHERE recipes.id = '${id}'
+        `
+      )
+  
+      return results.rows[0]
+    } catch (err) {
+      console.error(err);
+    }
   },
   async search(filter){
-
-    let query = `
+    try {
+      const query = `
       SELECT recipes.id, recipes.title, recipes.image, chefs.name AS chef_name
       FROM recipes
       LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
@@ -39,6 +54,8 @@ module.exports = {
     const results = await db.query(query)
 
     return results.rows
-  
+    } catch (err) {
+      console.error(err);
+    }
   }
 }

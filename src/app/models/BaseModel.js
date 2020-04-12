@@ -25,7 +25,6 @@ const Base = {
     return this
   },
   async find(id){
-
     try {
       const results = await find({WHERE: {id}}, this.table)
       return results.rows[0]
@@ -33,33 +32,18 @@ const Base = {
     } catch (err) {
       console.error(err)
     }
-
-  },
-  async findOne(filters){
-
-    try {
-      const results = await find(filters, this.table)
-      return results.rows[0]
-
-    } catch (err) {
-      console.error(err)
-    }
-
   },
   async findAll(filters){
-
     try {
       const results = await find(filters, this.table)
+      
       return results.rows
-
     } catch (err) {
       console.error(err)
     }
-
   },
   async saveCreate(fields){
     try {
-
       let keys = [], values = []
           
       Object.keys(fields).map( key => {
@@ -76,8 +60,8 @@ const Base = {
         RETURNING id`
 
       const results = await db.query(query)
+      
       return results.rows[0].id
-
     } catch (err) {
       console.error(err)
     }
@@ -105,14 +89,18 @@ const Base = {
         RETURNING *`
       
       const result = await db.query(query)
-      return result.rows[0]
       
+      return result.rows[0]
     } catch (err) {
       console.error(err)
     }
   },
   delete(id){
-    return db.query(`DELETE FROM ${this.table} WHERE id = $1`, [id])
+    try {
+      return db.query(`DELETE FROM ${this.table} WHERE id = $1`, [id])
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 

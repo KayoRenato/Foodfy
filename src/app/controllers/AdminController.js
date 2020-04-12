@@ -1,8 +1,3 @@
-const fs = require('fs')
-
-const dbFoodfy = require('../../../data/dataCardapio') //vai sair depois da persistência dos dados no DB
-const dbFoodfy2 = require('../../../data/data.json') //vai sair depois da persistência dos dados no DB
-
 const RecipeModel = require('../models/RecipesModel')
 const ChefsModel = require('../models/ChefsModel')
 
@@ -16,14 +11,14 @@ function isString(item){
 }
 
 module.exports = {
- //depois transferir consultado de dados do arquivo js para banco de dados postgre
-  recipes(req, res) {
+  async recipes(req, res) {
     try {
-      return res.render('admin/recipes.njk', {register,  items: dbFoodfy })    
+      const recipes = await RecipeModel.recipesSignedBy()
+
+      return res.render('admin/recipes.njk', {register,  items: recipes })    
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})
-
     }
   },
   recipeCreate(req, res){
@@ -52,7 +47,7 @@ module.exports = {
   async recipeEdit(req, res){
     try {
       const { id } = req.params
-      const recipe = await RecipeModel.find(id)
+      const recipe = await RecipeModel.recipeSigned(id)
 
       if(!recipe) return res.status(404).render('notFound.njk', { register })
 
@@ -66,7 +61,7 @@ module.exports = {
   async recipePost(req, res){
     try {
 
-      let { title, author, image, ingredients, preparation, information } = req.body
+      let { title, image, ingredients, preparation, information } = req.body
       
       const keys = Object.keys(req.body)
 
@@ -81,7 +76,6 @@ module.exports = {
 
       await RecipeModel.saveCreate({
         title,
-        // author,
         image,
         ingredients: ingredients.filter( item => item != ''),
         preparation: preparation.filter( item => item != ''),

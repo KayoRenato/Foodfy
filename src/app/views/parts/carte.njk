@@ -5,7 +5,7 @@
   <div class="carte {{classes}}">
     {% for item in items %}
       {% if classes == 'public' %}
-        <a href="/recipes/{{item.id or loop.index0}}">
+        <a href="/recipes/{{item.id}}">
       {% endif %}
         <div class="card">
           <div 
@@ -15,9 +15,9 @@
 
           <div class="info">
             <h3>{{item.title}}</h3>
-            <p>por {{item.author or item.chef_name}}</p>
+            <p>por {{item.chef_name}}</p>
               {% if classes == 'user' %}
-                <a href="/admin/recipes/{{item.id or loop.index0}}">Visualizar</a>                   
+                <a href="/admin/recipes/{{item.id}}">Visualizar</a>                   
               {% endif %}
           </div>
         </div>
