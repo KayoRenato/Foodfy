@@ -16,7 +16,7 @@
 
   {% block main %}
       {% call card.render('Criando receita', 'recipe-create' ) %}
-        <form action="/admin/recipes" method="post" name="form1">
+        <form action="/admin/recipes" method="post" name="form1" enctype="multipart/form-data">
           {% include "admin/fields.njk" %}
         </form>
       {% endcall %}

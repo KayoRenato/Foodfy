@@ -17,12 +17,37 @@
 </div>
 
 <div>Imagem da Receita</div>
-<div class="recipe-photo">
-  <input 
-    type="text" 
-    name="image"
-    value="{{recipe.image}}"
-  >
+<div class="photos-content">
+  <div id="photos-upload">
+   <div class="photo-plus">
+      <i class="fas fa-plus"></i>
+    </div>
+    <input 
+      id="photos-input"
+      type="file" 
+      name="photos" 
+      multiple
+      accept="image/jpeg, image/jpg, image/png"
+      onchange="PhotosUpload.handleFileInput(event)"
+    >
+  </div>
+
+  <div id="photos-preview">
+    {% if recipe.files %}
+      {% for file in recipe.files %}
+        <div class="photo" id="{{file.id}}">
+          <img src="{{file.src}}" alt="{{file.name}}">
+          <i 
+            class="fas fa-times"
+            onclick="PhotosUpload.removeImgAfterDB(event)"
+          ></i>
+        </div>          
+      {% endfor %}
+
+      <input type="hidden" name="removed_files">
+    {% endif %}
+  </div>
+
 </div>
 
 <div>Ingredientes</div>

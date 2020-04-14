@@ -1,8 +1,15 @@
 CREATE DATABASE foodfy
 
+CREATE TABLE "chefs" (
+  "id" SERIAL PRIMARY KEY,
+  "name" text,
+  "avatar_url" text NOT NULL,
+  "created_at" timestamp DEFAULT (now())
+);
+
 CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
-  "chef_id" int,
+  "chef_id" int REFERENCES "chefs" ("id"),
   "image" text NOT NULL,
   "title" text NOT NULL,
   "ingredients" text[] NOT NULL,
@@ -11,11 +18,15 @@ CREATE TABLE "recipes" (
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "chefs" (
+CREATE TABLE "files" (
   "id" SERIAL PRIMARY KEY,
   "name" text,
-  "avatar_url" text NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "path" text NOT NULL
+
 );
 
-ALTER TABLE "recipes" ADD FOREIGN KEY ("chef_id") REFERENCES "chefs" ("id");
+CREATE TABLE "recipe_files" (
+  "id" SERIAL PRIMARY KEY,
+  "recipe_id" INTEGER REFERENCES "recipes"("id"),
+  "file_id" INTEGER REFERENCES "files"("id")
+);
