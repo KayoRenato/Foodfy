@@ -9,11 +9,18 @@
 
 <div>Chef</div>
 <div class="recipe-title">
-  <input 
-    type="text" 
-    name="chef_name" 
-    value="{{recipe.chef_name}}"
-  >
+  <select name="chef_id">
+    {% for chef in chefs %}
+      <option value="{{chef.id}}"
+        {% if recipe.chef_id == chef.id %} 
+          selected
+        {% endif %}
+      >
+        {{chef.name}}
+      </option>
+    {% endfor %}
+  </select>
+
 </div>
 
 <div>Imagem da Receita</div>

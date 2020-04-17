@@ -11,7 +11,7 @@
       {% elif 'Cri' in title %}
         <h3> {{ title }}</h3>
         <div class="button-container">
-          <input class="button" value="Salvar" onclick="document.form1.submit()">
+          <input class="button" value="Salvar" onclick="document.form1.submit(), PhotosUpload.hasMini()">
         </div>
       {% elif 'recipe-show' == classes %}
         <h3>Receita: {{ title }}</h3>

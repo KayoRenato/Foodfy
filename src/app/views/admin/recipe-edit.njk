@@ -18,17 +18,12 @@
     {% call card.render('Editando receita', 'recipe-content') %}
 
       <form action="/admin/recipes?_method=DELETE" method="post" name="form1">
-
         <input type="hidden" name="id" value="{{id}}">
-
       </form>
   
-      <form action="/admin/recipes?_method=PUT" method="post" name="form2">
-  
+      <form action="/admin/recipes?_method=PUT" method="post" name="form2" enctype="multipart/form-data">
         <input type="hidden" name="id" value="{{id}}">
-
         {% include "admin/fields.njk" %}
-
       </form>
 
     {% endcall %}

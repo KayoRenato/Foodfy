@@ -4,6 +4,7 @@
   background: #FBDFDB;
   border-radius: 30px;
   margin: 0 auto;
+  margin-bottom: 60px;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }

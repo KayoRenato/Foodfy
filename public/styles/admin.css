@@ -21,7 +21,7 @@
   color: rgb(150, 139, 235);
 }
 
-.card-content input[type=text]{
+.card-content input[type=text],.card-content select{
   height: 49px;
   margin-top: 8px;
 }
@@ -32,7 +32,7 @@
 
 }
 
-.card-content input[type=text],
+.card-content input[type=text], .card-content select,
 .card-content textarea{
   
   border: 1px solid var(--color-bord-shadow);
@@ -42,7 +42,7 @@
   padding: 16px 16px;
 }
 
-.card-content input[type=text]:focus,
+.card-content input[type=text]:focus, .card-content select:focus,
 .card-content textarea:focus{
   outline: none;
   border: 2px solid rgb(150, 139, 235);
