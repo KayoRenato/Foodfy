@@ -23,8 +23,8 @@ async function getImages(ID){
   }
 }
 
-async function getChef(ID){
-  let chef = await ChefModel.find(ID)
+async function getChef(id){
+  let chef = await ChefModel.findOne({WHERE: { id }})
 
   return chef
 }

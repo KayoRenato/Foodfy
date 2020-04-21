@@ -20,7 +20,7 @@ module.exports = {
     try {
       const recipes = await LoadRecipe.load('recipes')
 
-      return res.render('admin/recipes.njk', {register,  items: recipes })    
+      return res.render('admin/recipes.njk', {register, recipes })    
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})

@@ -6,9 +6,9 @@ const register = 'public' //será substituido per session posteriormente
 module.exports = {
   async index(req, res) {
     try {
-      const recipes =  await RecipeModel.recipesSignedBy()
+      const recipes =  await LoadRecipe.load('recipes')
 
-      return res.render('recipes.njk', {items: recipes, register})    
+      return res.render('recipes.njk', {recipes, register})    
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})

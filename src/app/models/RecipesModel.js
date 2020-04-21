@@ -45,7 +45,7 @@ module.exports = {
   async search(filter){
     try {
       const query = `
-      SELECT recipes.id, recipes.title, recipes.image, chefs.name AS chef_name
+      SELECT recipes.*, chefs.name AS chef_name
       FROM recipes
       LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
       WHERE

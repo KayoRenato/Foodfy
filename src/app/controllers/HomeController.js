@@ -1,13 +1,14 @@
 const register = 'public'
 const ChefsModel = require('../models/ChefsModel')
-const RecipesModel = require('../models/RecipesModel')
+const LoadRecipe = require('../services/LoadRecipe')
+
 
 module.exports = {
   async index(req, res){
     try {
-      const recipes = await RecipesModel.recipesSignedBy()
+      const recipes = await LoadRecipe.load('recipes')
 
-      return res.render('index.njk', {register ,items: recipes.slice(0,6)})
+      return res.render('index.njk', {register , recipes: recipes.slice(0,6)})
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})

@@ -1,23 +1,23 @@
-{% macro render(items, classes) %}
+{% macro render(recipes, classes) %}
   
   {{caller()}}
 
   <div class="carte {{classes}}">
-    {% for item in items %}
+    {% for recipe in recipes %}
       {% if classes == 'public' %}
-        <a href="/recipes/{{item.id}}">
+        <a href="/recipes/{{recipe.id}}">
       {% endif %}
         <div class="card">
           <div 
             class="image"
-            style="background-image: url({{item.img}})"
+            style="background-image: url({{recipe.img}})"
           ></div>
 
           <div class="info">
-            <h3>{{item.title}}</h3>
-            <p>por {{item.chef_name}}</p>
+            <h3>{{recipe.title}}</h3>
+            <p>por {{recipe.chef_name}}</p>
               {% if classes == 'user' %}
-                <a href="/admin/recipes/{{item.id}}">Visualizar</a>                   
+                <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>                   
               {% endif %}
           </div>
         </div>
