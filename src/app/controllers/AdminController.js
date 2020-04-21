@@ -219,7 +219,7 @@ module.exports = {
       const chef = await ChefsModel.totalRecipes(id)
       const recipes_chef = await LoadRecipe.load('recipes', {WHERE: { chef_id: id }})
 
-      return res.render('admin/chef-show.njk', {id, chef, recipes_chef, register})
+      return res.render('admin/chef-show.njk', {chef, recipes_chef, register})
       
     } catch (err) {
       console.error(err);
@@ -231,7 +231,7 @@ module.exports = {
       const { id } = req.params
       const chef = await ChefsModel.find(id)
 
-      return res.render('admin/chef-edit.njk', {id, chef, register})
+      return res.render('admin/chef-edit.njk', {chef, register})
     } catch (err) {
       console.error(err);
       return res.status(404).render('notFound.njk', {register})
@@ -241,7 +241,7 @@ module.exports = {
     try {
       const { name, avatar_url } = req.body
 
-      const keys = Object.keys(req.body)
+      const keys = Object.keys({ name, avatar_url })
 
       for(key of keys){
         if(req.body[key] == "")
@@ -261,19 +261,14 @@ module.exports = {
     try {
       const {id, name, avatar_url} = req.body
 
-      const keys = Object.keys(req.body)
-
-      const chef ={
-        name,
-        avatar_url
-      }
+      const keys = Object.keys({ name, avatar_url })
 
       for(key of keys){
         if(req.body[key] == "")
-      return res.render('admin/chef-edit.njk', {id, chef, register})
+        return res.redirect(`/admin/chefs/${id}/edit`)
       }
 
-      await ChefsModel.saveUpdate(id, chef)
+      await ChefsModel.saveUpdate(id, {name, avatar_url})
 
       return res.redirect(`/admin/chefs/${id}`)
 
@@ -286,6 +281,18 @@ module.exports = {
   async chefDelete(req,res){
     try {
       const { id } = req.body
+
+      let recipes = await LoadRecipe.load('recipes', {WHERE: { chef_id: id }})
+
+      recipes.map( async recipe => {
+        let filesPromise =  recipe.files.map( file => {
+          unlinkSync(file.path)
+          FilesModel.delete(file.id) }
+        )
+
+        await Promise.all(filesPromise)
+       
+      })
 
       await ChefsModel.delete(id)
 

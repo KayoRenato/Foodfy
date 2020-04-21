@@ -21,7 +21,6 @@ async function getImages(ID){
 
     return files
   }
-  
 }
 
 async function getChef(ID){

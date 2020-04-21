@@ -19,13 +19,13 @@
 
         <form action="/admin/chefs?_method=DELETE" method="post" name="form1">
 
-          <input type="hidden" name="id" value="{{id}}">
+          <input type="hidden" name="id" value="{{chef.id}}">
 
         </form>
     
         <form action="/admin/chefs?_method=PUT" method="post" name="form2">
     
-          <input type="hidden" name="id" value="{{id}}">
+          <input type="hidden" name="id" value="{{chef.id}}">
 
           {% include "admin/chef-fields.njk" %}
 

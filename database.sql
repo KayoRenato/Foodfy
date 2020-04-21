@@ -8,6 +8,8 @@ ALTER SEQUENCE recipes_id_seq RESTART WITH 1;
 ALTER SEQUENCE recipe_files_id_seq RESTART WITH 1;
 ALTER SEQUENCE chefs_id_seq RESTART WITH 1;
 
+ALTER TABLE "recipes" ADD FOREIGN KEY ("chef_id") REFERENCES "chefs"("id") ON DELETE CASCADE;
+
 CREATE DATABASE foodfy
 
 CREATE TABLE "chefs" (
