@@ -112,7 +112,7 @@ module.exports = {
     try {
       let { id ,title, chef_id, ingredients, preparation, information } = req.body
 
-      const keys = Object.keys({ title, chef_id, ingredients, preparation })
+      const keys = Object.keys({ title, ingredients, preparation })
       
       for(key of keys){
         if(req.body[key] == ""){
@@ -217,7 +217,7 @@ module.exports = {
     try {
       const { id } = req.params
       const chef = await ChefsModel.totalRecipes(id)
-      const recipes_chef = await RecipeModel.recipesSignedBy(id)
+      const recipes_chef = await LoadRecipe.load('recipes', {WHERE: { chef_id: id }})
 
       return res.render('admin/chef-show.njk', {id, chef, recipes_chef, register})
       
