@@ -14,6 +14,7 @@ function find(filters, table){
     })
   }
 
+  console.log(query)
   return db.query(query)
 }
 
@@ -27,6 +28,15 @@ const Base = {
   async find(id){
     try {
       const results = await find({WHERE: {id}}, this.table)
+      return results.rows[0]
+
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  async findOne(filters){
+    try {
+      const results = await find(filters, this.table)
       return results.rows[0]
 
     } catch (err) {

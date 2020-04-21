@@ -2,6 +2,7 @@ const RecipeModel = require('../models/RecipesModel')
 const FilesModel = require('../models/FilesModel')
 const RecipeFileModel = require('../models/RecipeFileModel')
 const ChefsModel = require('../models/ChefsModel')
+const LoadRecipe = require('../services/LoadRecipe')
 
 const { unlinkSync } = require('fs')
 
@@ -17,7 +18,9 @@ function isString(item){
 module.exports = {
   async recipes(req, res) {
     try {
-      const recipes = await RecipeModel.recipesSignedBy()
+      const recipes = await LoadRecipe.load('recipes')
+
+      console.log(recipes)
 
       return res.render('admin/recipes.njk', {register,  items: recipes })    
     } catch (err) {
@@ -38,12 +41,13 @@ module.exports = {
   },
   async recipeShow(req, res){
     try {
-      const { id } = req.params
-      const recipe = await RecipeModel.recipeSigned(id)
+      const recipe = await LoadRecipe.load('recipe',
+        { WHERE: { id: req.params.id }}
+      )
 
       if(!recipe) return res.status(404).render('notFound.njk', {register})
 
-      return res.render('admin/recipe-show.njk', { register, item: recipe, id })
+      return res.render('admin/recipe-show.njk', { register, recipe })
       
     } catch (err) {
       console.error(err);
@@ -52,13 +56,14 @@ module.exports = {
   },
   async recipeEdit(req, res){
     try {
-      const { id } = req.params
-      const recipe = await RecipeModel.recipeSigned(id)
+      const recipe = await LoadRecipe.load('recipe',
+      { WHERE: { id: req.params.id }}
+    )
       const chefs = await ChefsModel.findAll()
 
       if(!recipe) return res.status(404).render('notFound.njk', { register })
 
-      return res.render('admin/recipe-edit.njk', { register, recipe, id, chefs })
+      return res.render('admin/recipe-edit.njk', { register, recipe, chefs })
       
     } catch (err) {
       console.error(err);
@@ -118,6 +123,29 @@ module.exports = {
         }
       }
 
+      if (req.files.length != 0) {
+        const filesPromise = req.files.map(async file => {
+          const file_id = await FilesModel.saveCreate({ name: file.filename, path: file.path })
+          await RecipeFileModel.saveCreate({file_id, recipe_id: id})
+        })
+      
+        await Promise.all(filesPromise)
+      }
+
+      if (req.body.removed_files) {
+        let removedFiles = req.body.removed_files.split(",")
+        const lastIndex = removedFiles.length - 1
+        removedFiles.splice(lastIndex, 1)
+  
+        const removedFilesPromise = removedFiles.map(async fileID => {
+          const file = await FilesModel.find(fileID)
+          unlinkSync(file.path)
+          FilesModel.delete(fileID) //remover arquivo file do db
+        })
+
+        await Promise.all(removedFilesPromise)
+      }
+
       ingredients = isString(ingredients)
       ingredients = ingredients.filter( item => item != '')
       
@@ -132,29 +160,6 @@ module.exports = {
 
       await RecipeModel.saveUpdate(id, {title, chef_id, ingredients, preparation, information })
 
-      if (req.files.length != 0) {
-        const filesPromise = req.files.map(async file => {
-          const file_id = await FilesModel.saveCreate({ name: file.filename, path: file.path })
-          RecipeFileModel.saveCreate({file_id, recipe_id})
-        })
-      
-        await Promise.all(filesPromise)
-      }
-
-      if (req.body.removed_files) {
-        let removedFiles = req.body.removed_files.split(",")
-        const lastIndex = removedFiles.length - 1
-        removedFiles.splice(lastIndex, 1)
-  
-        const removedFilesPromise = removedFiles.map(async id => {
-          const file = await FilesModel.find(id)
-          unlinkSync(file.path)
-          FilesModel.delete(id)
-        })
-
-        await Promise.all(removedFilesPromise)
-      }
-
       return res.redirect(`/admin/recipes/${id}`)
       
     } catch (err) {
@@ -166,11 +171,17 @@ module.exports = {
     try {
       const { id } = req.body
 
+      let recipe_files = await RecipeFileModel.findAll({WHERE:{recipe_id: id}})
+      
+      const removedFilesPromise = recipe_files.map( async rep_file => {
+        const file = await FilesModel.find(rep_file.file_id)
+        unlinkSync(file.path)
+        FilesModel.delete(file.id) 
+      })
+
+      await Promise.all(removedFilesPromise)
+      
       RecipeModel.delete(id)
-
-      const files = await RecipeFileModel.findAll({WHERE:{recipe_id: id}})
-
-      files.map( async file => await FilesModel.delete(file.file_id))
 
       return res.redirect('/admin/recipes') 
 

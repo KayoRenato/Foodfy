@@ -21,17 +21,17 @@
       <div class="head">
         <div 
           class="image"
-          style="background-image: url({{item.image}})"
+          style="background-image: url({{recipe.img}})"
         ></div>
         <h2>{{item.title}}</h2>
-        <p class='author'>por {{item.chef_name}}</p>
+        <p class='author'>por {{recipe.chef_name}}</p>
       </div>
 
       <div class="content">
         <div class="ingre">
           <h3>Ingredientes - <a class="ingre">Mostrar</a></h3>
             <ul class="hide">
-              {% for ing in item.ingredients %}
+              {% for ing in recipe.ingredients %}
               <li>{{ing}}</li>
               {% endfor %}
             </ul>
@@ -40,16 +40,16 @@
         <div class="prep">
           <h3>Preparo - <a class="prep">Mostrar</a></h3>
           <ol class="hide">
-          {% for prep in item.preparation %}
+          {% for prep in recipe.preparation %}
             <li>{{prep}}</li>
             {% endfor %}
           </ol>
         </div>
 
-        {% if item.information %}
+        {% if recipe.information %}
           <div class="info">
             <h3>Informações Adicionais - <a class="info">Mostrar</a></h3>
-            <p class="hide">{{item.information}}</p>
+            <p class="hide">{{recipe.information}}</p>
           </div>
         {% endif %}
         

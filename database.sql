@@ -1,3 +1,13 @@
+DELETE FROM files;
+DELETE FROM recipes;
+DELETE FROM recipe_files;
+DELETE FROM chefs;
+
+ALTER SEQUENCE files_id_seq RESTART WITH 1;
+ALTER SEQUENCE recipes_id_seq RESTART WITH 1;
+ALTER SEQUENCE recipe_files_id_seq RESTART WITH 1;
+ALTER SEQUENCE chefs_id_seq RESTART WITH 1;
+
 CREATE DATABASE foodfy
 
 CREATE TABLE "chefs" (

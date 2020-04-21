@@ -17,14 +17,25 @@
   {% block main %}
     {% call card.render('Editando receita', 'recipe-content') %}
 
-      <form action="/admin/recipes?_method=DELETE" method="post" name="form1">
-        <input type="hidden" name="id" value="{{id}}">
+      <form id="delete" action="/admin/recipes?_method=DELETE" method="post" name="form1">
+        <input type="hidden" name="id" value="{{recipe.id}}">
       </form>
   
       <form action="/admin/recipes?_method=PUT" method="post" name="form2" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="{{id}}">
+        <input type="hidden" name="id" value="{{recipe.id}}">
         {% include "admin/fields.njk" %}
       </form>
 
     {% endcall %}
+
+    {# <script>
+      const formDelete = document.querySelector("#delete")
+      formDelete.addEventListener("submit", (event) => {
+        const confirmation = confirm("Deseja Deletar?")
+        
+        if(!confirmation){
+          event.preventDefault()
+        }
+      })
+    </script> #}
   {% endblock %}

@@ -16,23 +16,23 @@
 
   {% block main %}
 
-    {% call card.render( item.title, 'recipe-show', id) %}
+    {% call card.render( recipe.title, 'recipe-show', recipe.id) %}
       
       <div class="recipe">
         <div class="head">
          <div 
             class="image"
-            style="background-image: url({{item.image}})"
+            style="background-image: url({{recipe.img}})"
           ></div>
-          <h2>{{item.title}}</h2>
-          <p class='author'>por {{item.chef_name}}</p>
+          <h2>{{recipe.title}}</h2>
+          <p class='author'>por {{recipe.chef_name}}</p>
         </div>
 
         <div class="content">
           <div class="ingre">
             <h3>Ingredientes</h3>
               <ul>
-                {% for ing in item.ingredients %}
+                {% for ing in recipe.ingredients %}
                 <li>{{ing}}</li>
                 {% endfor %}
               </ul>
@@ -41,16 +41,16 @@
           <div class="prep">
             <h3>Preparo</h3>
             <ol>
-            {% for prep in item.preparation %}
+            {% for prep in recipe.preparation %}
               <li>{{prep}}</li>
               {% endfor %}
             </ol>
           </div>
 
-          {% if item.information %}
+          {% if recipe.information %}
             <div class="info">
               <h3>Informações Adicionais</h3>
-              <p>{{item.information}}</p>
+              <p>{{recipe.information}}</p>
             </div>
           {% endif %}
               
