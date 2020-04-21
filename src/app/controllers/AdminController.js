@@ -20,8 +20,6 @@ module.exports = {
     try {
       const recipes = await LoadRecipe.load('recipes')
 
-      console.log(recipes)
-
       return res.render('admin/recipes.njk', {register,  items: recipes })    
     } catch (err) {
       console.error(err);
@@ -75,15 +73,14 @@ module.exports = {
 
       let { title, chef_id, ingredients, preparation, information } = req.body
       
-      const keys = Object.keys({ title, chef_id, ingredients, preparation })
+      const keys = Object.keys({ title, ingredients, preparation })
 
       for(key of keys){
         if(req.body[key] == "")
           return res.redirect('/admin/recipes/create')
-          
       }
 
-      if(req.files.length == 0)
+      if(req.files.length === 0)
         return res.redirect('/admin/recipes/create')
 
       ingredients = isString(ingredients)
@@ -114,7 +111,7 @@ module.exports = {
   async recipePut(req, res){
     try {
       let { id ,title, chef_id, ingredients, preparation, information } = req.body
-      
+
       const keys = Object.keys({ title, chef_id, ingredients, preparation })
       
       for(key of keys){
@@ -133,14 +130,21 @@ module.exports = {
       }
 
       if (req.body.removed_files) {
+        const recipe = await LoadRecipe.load('recipe', { WHERE: { id }})
+        const filesLength = recipe.files.length
+
         let removedFiles = req.body.removed_files.split(",")
         const lastIndex = removedFiles.length - 1
         removedFiles.splice(lastIndex, 1)
+
+        if(filesLength === removedFiles.length){
+          return res.redirect(`/admin/recipes/${id}/edit`)
+        }
   
         const removedFilesPromise = removedFiles.map(async fileID => {
           const file = await FilesModel.find(fileID)
           unlinkSync(file.path)
-          FilesModel.delete(fileID) //remover arquivo file do db
+          FilesModel.delete(fileID)
         })
 
         await Promise.all(removedFilesPromise)
@@ -181,7 +185,7 @@ module.exports = {
 
       await Promise.all(removedFilesPromise)
       
-      RecipeModel.delete(id)
+      await RecipeModel.delete(id)
 
       return res.redirect('/admin/recipes') 
 

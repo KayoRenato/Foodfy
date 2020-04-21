@@ -38,7 +38,6 @@ async function format(recipe){
   recipe.files = files
   recipe.chef_name = chef.name
 
-  console.log(recipe)
   return recipe
 }
 
@@ -59,7 +58,6 @@ const LoadRecipe = {
   async recipes(){
     try {
       let recipes = await RecipeModel.findAll(this.filter)
-      console.log(recipes)
       const recipesPromise = recipes.map(format)
       
       return Promise.all(recipesPromise)

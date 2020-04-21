@@ -10,13 +10,13 @@ for(item of menuItems){
 const PhotosUpload = {
   input: "",
   preview: document.querySelector('#photos-preview'),
-  uploadLimit: 5,
+  uploadLimitMax: 5,
   files: [],
   handleFileInput(event){
     const { files: fileList } = event.target
     PhotosUpload.input = event.target
 
-    if(PhotosUpload.hasLimit(event)) return
+    if(PhotosUpload.hasLimitMax(event)) return
 
     Array.from(fileList).forEach(file => {
       PhotosUpload.files.push(file)      
@@ -40,12 +40,12 @@ const PhotosUpload = {
     PhotosUpload.input.files = PhotosUpload.getAllFiles()
   },
 
-  hasLimit(event){
-    const { uploadLimit, input, preview } = PhotosUpload
+  hasLimitMax(event){
+    const { uploadLimitMax, input, preview } = PhotosUpload
     const { files: fileList } = input
 
-    if(fileList.length > uploadLimit) {
-      alert(`Envie no máximo ${uploadLimit} fotos!`)
+    if(fileList.length > uploadLimitMax) {
+      alert(`Envie no máximo ${uploadLimitMax} fotos!`)
       event.preventDefault()
       return true
     }
@@ -58,14 +58,34 @@ const PhotosUpload = {
 
     const totalPhotos = fileList.length + photosContainer.length
     
-    if(totalPhotos > uploadLimit) {
-      alert(`Você atingiu o limite máximo de ${uploadLimit} fotos!`)
+    if(totalPhotos > uploadLimitMax) {
+      alert(`Você atingiu o limite máximo de ${uploadLimitMax} fotos!`)
       event.preventDefault()
       return true
     }
 
     return false;
   },
+
+  // hasLimitMin(event){
+  //   const { preview } = PhotosUpload
+
+  //   const photosContainer = []
+  //   preview.childNodes.forEach(item => {
+  //     if(item.classList && item.classList.value == "photo") 
+  //       photosContainer.push(item)
+  //   })
+
+  //   console.log(photosContainer, photosContainer.length)
+
+  //   if(!photosContainer){
+  //     alert(`Você atingiu o limite máximo de ${uploadLimitMax} fotos!`)
+  //     event.preventDefault()
+  //     return true
+  //   }
+
+  //   return false;
+  // },
 
   getAllFiles(){
     const dataTransfer = new ClipboardEvent("").clipboardData || new DataTransfer()

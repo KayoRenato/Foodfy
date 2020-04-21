@@ -14,7 +14,7 @@ function find(filters, table){
     })
   }
 
-  console.log(query)
+  // console.log(query)
   return db.query(query)
 }
 
