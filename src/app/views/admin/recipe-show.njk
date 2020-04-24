@@ -19,16 +19,51 @@
     {% call card.render( recipe.title, 'recipe-show', recipe.id) %}
       
       <div class="recipe">
-        <div class="head">
-         <div 
-            class="image"
-            style="background-image: url({{recipe.img}})"
-          ></div>
-          <h2>{{recipe.title}}</h2>
-          <p class='author'>por {{recipe.chef_name}}</p>
+
+        <div class="gallery">
+          <div class="highlight">
+            {% if not recipe.img %}
+              <img src="http://placehold.it/500x500?text=PRODUTO SEM FOTO">
+            {%else%}
+              <img 
+                src="{{recipe.img}}" 
+                alt="{{recipe.files.name}}"
+                onclick = "Lightbox.open()"
+              >
+            {% endif %}
+
+            <div class="lightbox-target">
+              <img src="{{recipe.img}}" alt="{{recipe.files.name}}">
+              <a 
+                href="#" 
+                class="lightbox-close"
+                onclick = "Lightbox.close()"
+              >
+                <i class="far fa-times-circle"></i>
+              </a>
+            </div>
+
+          </div>
+
+          <div class="gallery-preview">
+            {% for file in recipe.files %}
+              <img 
+              src="{{file.src}}"
+              alt="{{file.name}}"
+              {% if loop.index0 == 0 %}
+              class = "active"
+              {% endif %}
+              onclick="ImageGallery.setImage(event)"
+              >
+            {% endfor %}
+          </div>
         </div>
 
         <div class="content">
+          <h2>{{recipe.title}}</h2>
+
+          <p class='author'>por {{recipe.chef_name}}</p>
+
           <div class="ingre">
             <h3>Ingredientes</h3>
               <ul>
