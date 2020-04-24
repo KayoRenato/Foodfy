@@ -14,7 +14,6 @@ function find(filters, table){
     })
   }
 
-  // console.log(query)
   return db.query(query)
 }
 
@@ -24,15 +23,6 @@ const Base = {
 
     this.table = table
     return this
-  },
-  async find(id){
-    try {
-      const results = await find({WHERE: {id}}, this.table)
-      return results.rows[0]
-
-    } catch (err) {
-      console.error(err)
-    }
   },
   async findOne(filters){
     try {
@@ -111,6 +101,21 @@ const Base = {
     } catch (err) {
       console.error(err);
     }
+  },
+  async search(filters){
+    try {
+      const results = await db.query(
+        ` 
+        SELECT * FROM ${this.table}
+          WHERE (recipes.title ilike '%${filters}%')
+        `
+      )
+
+      return results.rows
+    } catch (err) {
+      console.error(err)
+    }
+
   }
 }
 

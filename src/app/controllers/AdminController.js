@@ -2,7 +2,7 @@ const RecipeModel = require('../models/RecipesModel')
 const FilesModel = require('../models/FilesModel')
 const RecipeFileModel = require('../models/RecipeFileModel')
 const ChefsModel = require('../models/ChefsModel')
-const LoadRecipe = require('../services/LoadRecipe')
+const LoadService = require('../services/LoadService')
 
 const { unlinkSync } = require('fs')
 
@@ -18,7 +18,7 @@ function isString(item){
 module.exports = {
   async recipes(req, res) {
     try {
-      const recipes = await LoadRecipe.load('recipes')
+      const recipes = await LoadService.load('recipes')
 
       return res.render('admin/recipes.njk', {register, recipes })    
     } catch (err) {
@@ -39,7 +39,7 @@ module.exports = {
   },
   async recipeShow(req, res){
     try {
-      const recipe = await LoadRecipe.load('recipe',
+      const recipe = await LoadService.load('recipe',
         { WHERE: { id: req.params.id }}
       )
 
@@ -54,7 +54,7 @@ module.exports = {
   },
   async recipeEdit(req, res){
     try {
-      const recipe = await LoadRecipe.load('recipe',
+      const recipe = await LoadService.load('recipe',
       { WHERE: { id: req.params.id }}
     )
       const chefs = await ChefsModel.findAll()
@@ -130,7 +130,7 @@ module.exports = {
       }
 
       if (req.body.removed_files) {
-        const recipe = await LoadRecipe.load('recipe', { WHERE: { id }})
+        const recipe = await LoadService.load('recipe', { WHERE: { id }})
         const filesLength = recipe.files.length
 
         let removedFiles = req.body.removed_files.split(",")
@@ -217,7 +217,7 @@ module.exports = {
     try {
       const { id } = req.params
       const chef = await ChefsModel.totalRecipes(id)
-      const recipes_chef = await LoadRecipe.load('recipes', {WHERE: { chef_id: id }})
+      const recipes_chef = await LoadService.load('recipes', {WHERE: { chef_id: id }})
 
       return res.render('admin/chef-show.njk', {chef, recipes_chef, register})
       
@@ -229,7 +229,7 @@ module.exports = {
   async chefEdit(req,res){
     try {
       const { id } = req.params
-      const chef = await ChefsModel.find(id)
+      const chef = await ChefsModel.find(id) //Ajustar para findOne
 
       return res.render('admin/chef-edit.njk', {chef, register})
     } catch (err) {
@@ -282,7 +282,7 @@ module.exports = {
     try {
       const { id } = req.body
 
-      let recipes = await LoadRecipe.load('recipes', {WHERE: { chef_id: id }})
+      let recipes = await LoadService.load('recipes', {WHERE: { chef_id: id }})
 
       recipes.map( async recipe => {
         let filesPromise =  recipe.files.map( file => {

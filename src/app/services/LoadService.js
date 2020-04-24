@@ -8,7 +8,8 @@ async function getImages(ID){
 
   if(filesID){
     let filesPromise = filesID.map( async file => (
-      await FilesModel.find(file.file_id)))
+      await FilesModel.findOne({WHERE: {id: file.file_id}})
+    ))
 
     let files = await Promise.all(filesPromise)
 
@@ -40,7 +41,7 @@ async function format(recipe){
   return recipe
 }
 
-const LoadRecipe = {
+const LoadService = {
   load(service, filter){
     this.filter = filter
     return this[service]()
@@ -62,11 +63,21 @@ const LoadRecipe = {
       return Promise.all(recipesPromise)
     } catch (err) {
       console.error(err);
+    }
+  },
+  async search(){
+    try {
+
+      let recipes = await RecipeModel.search(this.filter)
+      const recipesPromise = recipes.map(format)
       
+      return Promise.all(recipesPromise)
+    } catch (err) {
+      console.error(err);
     }
   },
   format,
 
 }
 
-module.exports = LoadRecipe
+module.exports = LoadService

@@ -14,7 +14,7 @@ const server = express()
 //   next()
 // })
 
-server.use(express.urlencoded({ extended:true })) //responsible for body recognition
+server.use(express.urlencoded({ extended:true }))
 server.use(express.static('public')) 
 server.use(methodOverride('_method')) 
 server.use(routes)

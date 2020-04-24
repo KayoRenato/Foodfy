@@ -1,12 +1,12 @@
 const register = 'public'
 const ChefsModel = require('../models/ChefsModel')
-const LoadRecipe = require('../services/LoadRecipe')
+const LoadService = require('../services/LoadService')
 
 
 module.exports = {
   async index(req, res){
     try {
-      const recipes = await LoadRecipe.load('recipes')
+      const recipes = await LoadService.load('recipes')
 
       return res.render('index.njk', {register , recipes: recipes.slice(0,6)})
     } catch (err) {
