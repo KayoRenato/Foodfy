@@ -14,6 +14,9 @@ function find(filters, table){
     })
   }
 
+  if(table === 'recipes')
+    query += ` ORDER BY created_at DESC `
+
   return db.query(query)
 }
 
@@ -108,6 +111,7 @@ const Base = {
         ` 
         SELECT * FROM ${this.table}
           WHERE (recipes.title ilike '%${filters}%')
+          ORDER BY recipes.updated_at DESC
         `
       )
 

@@ -1,8 +1,8 @@
   
-const Base = require("./BaseModel")
+const BaseModel = require("./BaseModel")
 
-Base.init({ table: 'files' })
+BaseModel.init({ table: 'files' })
 
 module.exports = {
-  ...Base
+  ...BaseModel
 }
