@@ -229,7 +229,7 @@ module.exports = {
   async chefEdit(req,res){
     try {
       const { id } = req.params
-      const chef = await ChefsModel.find(id) //Ajustar para findOne
+      const chef = await ChefsModel.findOne({WHERE: {id}})
 
       return res.render('admin/chef-edit.njk', {chef, register})
     } catch (err) {
