@@ -1,0 +1,41 @@
+<section class="user fields">
+  <div>
+    <div class="title">Nome</div>
+    <div class="user-name">
+      <input 
+        type="text" 
+        name="name"
+        placeholder="Digite o nome completo"
+        value="{{user.name}}"
+      >
+    </div>
+  </div>
+
+  <div>
+    <div class="title">E-mail</div>
+    <div class="user-email">
+    <input 
+      type="email" 
+      name="email"
+      placeholder="Digite o e-mail"
+      value="{{user.email}}"
+    >
+    </div>
+  </div>
+</section>
+
+<div class="user-admin"> 
+
+<label class="container">Administrador
+  <input 
+    type="checkbox"
+    name="is_admin"
+    {% if user.is_admin %}
+      checked
+    {% endif %} 
+  >
+  <span class="checkmark"></span>
+</label>
+
+
+</div>

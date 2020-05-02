@@ -1,19 +1,13 @@
-{% extends "layout.njk" %}
+{% extends "parts/layout.njk" %}
 
 {% import "parts/header.njk" as header %}
 {% import "parts/carte.njk" as carte %}
 
 {% block header %}
   {% call header.render(register) %}
-  {% if register == 'user' %}
-    <a href="/admin/recipes">RECEITAS</a>
-    <a href="/admin/chefs">CHEFS</a>
-  {% else %}
-     <a href="/recipes">RECEITAS</a>
-     <a href="/chefs">CHEFS</a>
-     <a href="/about">SOBRE</a>
-  {% endif %}
-    
+    <a href="/recipes">RECEITAS</a>
+    <a href="/chefs">CHEFS</a>
+    <a href="/about">SOBRE</a>
   {% endcall %}
 {% endblock %}
 

@@ -15,19 +15,19 @@
   {% endblock %}
 
   {% block main %}
-      {% call card.render('Editando Chef', 'chef-edit' ) %}
+      {% call card.render('Editando Usuário', 'user-edit' ) %}
 
-        <form action="/admin/chefs?_method=DELETE" method="post" name="form1">
+        <form action="/admin/users?_method=DELETE" method="post" name="form1">
 
-          <input type="hidden" name="id" value="{{chef.id}}">
+          <input type="hidden" name="id" value="{{user.id}}">
 
         </form>
     
-        <form action="/admin/chefs?_method=PUT" method="post" name="form2">
+        <form action="/admin/users?_method=PUT" method="post" name="form2">
     
-          <input type="hidden" name="id" value="{{chef.id}}">
+          <input type="hidden" name="id" value="{{user.id}}">
 
-          {% include "admin/chef-fields.njk" %}
+          {% include "admin/user-fields.njk" %}
 
         </form>
       {% endcall %}

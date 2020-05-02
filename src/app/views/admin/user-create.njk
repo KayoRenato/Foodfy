@@ -15,20 +15,9 @@
   {% endblock %}
 
   {% block main %}
-      {% call card.render('Editando Chef', 'chef-edit' ) %}
-
-        <form action="/admin/chefs?_method=DELETE" method="post" name="form1">
-
-          <input type="hidden" name="id" value="{{chef.id}}">
-
-        </form>
-    
-        <form action="/admin/chefs?_method=PUT" method="post" name="form2">
-    
-          <input type="hidden" name="id" value="{{chef.id}}">
-
-          {% include "admin/chef-fields.njk" %}
-
+      {% call card.render('Criando Usuário', 'user-create' ) %}
+        <form action="/admin/users" method="post" name="form1">
+          {% include "admin/user-fields.njk" %}
         </form>
       {% endcall %}
   {% endblock %}

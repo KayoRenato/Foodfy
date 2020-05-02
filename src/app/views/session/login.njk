@@ -4,7 +4,7 @@
 {% import "parts/card.njk" as card %} 
 
   {% block head %}
-    <title>FoodFy</title>
+    <title>FoodFy - Login </title>
   {% endblock %}
 
   {% block header %}
@@ -15,9 +15,7 @@
   {% endblock %}
 
   {% block main %}
-      {% call card.render('Criando Chef', 'chef-create' ) %}
-        <form action="/admin/chefs" method="post" name="form1">
-          {% include "admin/chef-fields.njk" %}
-        </form>
-      {% endcall %}
+
+    
+
   {% endblock %}

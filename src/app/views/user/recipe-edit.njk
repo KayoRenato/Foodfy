@@ -1,4 +1,4 @@
-{% extends "layout.njk" %}
+{% extends "parts/layout.njk" %}
 
 {% import "parts/header.njk" as header %} 
 {% import "parts/card.njk" as card %} 
@@ -9,21 +9,21 @@
 
   {% block header %}
     {% call header.render(register) %}
-      <a href="/admin/recipes">RECEITAS</a>
-      <a href="/admin/chefs">CHEFS</a>  
+      <a href="/user/recipes">RECEITAS</a>
+      <a href="/user/chefs">CHEFS</a>  
     {% endcall %}
   {% endblock %}
 
   {% block main %}
     {% call card.render('Editando receita', 'recipe-content') %}
 
-      <form id="delete" action="/admin/recipes?_method=DELETE" method="post" name="form1">
+      <form id="delete" action="/user/recipes?_method=DELETE" method="post" name="form1">
         <input type="hidden" name="id" value="{{recipe.id}}">
       </form>
   
-      <form action="/admin/recipes?_method=PUT" method="post" name="form2" enctype="multipart/form-data">
+      <form action="/user/recipes?_method=PUT" method="post" name="form2" enctype="multipart/form-data">
         <input type="hidden" name="id" value="{{recipe.id}}">
-        {% include "admin/fields.njk" %}
+        {% include "user/fields.njk" %}
       </form>
 
     {% endcall %}

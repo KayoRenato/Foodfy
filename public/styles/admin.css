@@ -4,7 +4,7 @@
 }
 
 
-.card-content form > div:nth-of-type(odd){
+.card-content form > div:nth-of-type(odd), label, section div.title {
   font-weight: bold;
   font-size: 16px;
   margin-top: 20px;
@@ -21,7 +21,7 @@
   color: rgb(150, 139, 235);
 }
 
-.card-content input[type=text],.card-content select{
+.card-content input[type=text], .card-content input[type=email], .card-content select{
   height: 49px;
   margin-top: 8px;
 }
@@ -32,7 +32,78 @@
 
 }
 
-.card-content input[type=text], .card-content select,
+.card-content input[type=checkbox]{
+  cursor: pointer;
+}
+.card-content input[type=checkbox]:checked {
+  background-color: rgb(150, 139, 235);
+}
+
+.container {
+  display: block;
+  width: 140px;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border: 1px solid var(--color-bord-shadow);
+  border-radius: 4px;
+}
+
+.container:hover input ~ .checkmark {
+  border: 2px solid rgb(150, 139, 235);
+  border-radius: 4px;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #6558C3;
+  border-radius: 4px;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 8px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.card-content input[type=text], .card-content input[type=email], .card-content select,
 .card-content textarea{
   
   border: 1px solid var(--color-bord-shadow);
@@ -42,7 +113,7 @@
   padding: 16px 16px;
 }
 
-.card-content input[type=text]:focus, .card-content select:focus,
+.card-content input[type=text]:focus, .card-content input[type=email]:focus, .card-content select:focus,
 .card-content textarea:focus{
   outline: none;
   border: 2px solid rgb(150, 139, 235);
@@ -86,13 +157,13 @@
   margin-bottom: 10px;
 }
 
-.carte.user .info a,
+.carte.users .info a,
 .chefs.list .card .info a{
   color: #6558C3;
   font-weight: bold;
 }
 
-.carte.user .info a:hover,
+.carte.users .info a:hover,
 .chefs.list .card .info a:hover{
   color: rgb(150, 139, 235);
   font-weight: bold;
@@ -175,3 +246,52 @@
 
   margin-bottom: 18px;
 }
+
+.users.list{
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  row-gap: 52px;
+  justify-content: space-between;
+}
+
+.users .info h3{
+  font-size: 18px;
+}
+.users .info p{
+  margin: 4px 0 0 0;
+}
+.users .action{
+  margin-top: 16px;
+  display: flex;
+}
+
+.users .action a{
+  margin-right: 16px;
+  font-weight: bold;
+  color: #6558C3;
+
+}
+
+.users .action a:hover{
+  color: rgb(150, 139, 235);
+
+}
+
+.users .action button{
+  margin-right: 16px;
+  font-weight: bold;
+  color: #DC4747;
+  cursor: pointer;
+
+}
+
+.users .action button:hover{
+  color: rgb(221, 105, 105);
+}
+
+section.user.fields{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 60px;
+}
+

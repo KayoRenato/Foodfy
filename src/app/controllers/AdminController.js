@@ -1,197 +1,113 @@
-const RecipeModel = require('../models/RecipesModel')
-const FilesModel = require('../models/FilesModel')
-const RecipeFileModel = require('../models/RecipeFileModel')
+const UsersModel = require('../models/UsersModel')
 const ChefsModel = require('../models/ChefsModel')
 const LoadService = require('../services/LoadService')
 
-const { unlinkSync } = require('fs')
-
 const register = 'user'
 
-function isString(item){
-  if(typeof item == 'string')
-    return item.split(" ")
-  else
-    return item
-}
-
 module.exports = {
-  async recipes(req, res) {
+  async users(req, res) {
     try {
-      const recipes = await LoadService.load('recipes')
+      let users = await UsersModel.listUsers()
 
-      return res.render('admin/recipes.njk', {register, recipes })    
+      return res.render('admin/users.njk', {users, register })
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk')
     }
   },
-  async recipeCreate(req, res){
+  async userCreate(req, res) {
     try {
-      const chefs = await ChefsModel.findAll()
-
-      return res.render('admin/recipe-create.njk', { register, chefs })
-      
+      return res.render('admin/user-create.njk', { register })
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk')
     }
   },
-  async recipeShow(req, res){
+  async userPost(req, res) {
     try {
-      const recipe = await LoadService.load('recipe',
-        { WHERE: { id: req.params.id }}
-      )
+      let { name, email, is_admin } = req.body,
+        password = 123 // Substituir pelo envio de hash por email para o usuário criar sua senha.
 
-      if(!recipe) return res.status(404).render('notFound.njk', {register})
+        const keys = Object.keys({ name, email })
 
-      return res.render('admin/recipe-show.njk', { register, recipe })
+      //validar formato de email no backend e front-end
+      for(key of keys){
+        if(req.body[key] == "")
+          return res.render('admin/user-create.njk', { register })
+      }
+
+      is_admin === "on"? is_admin = true : is_admin = false
+
+      //validar no backend se o e-mail já tá cadastrado.
+
+      await UsersModel.saveCreate({name, email, password, is_admin})
       
+      return res.redirect('/admin/users')
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk')
     }
   },
-  async recipeEdit(req, res){
+  async userShow(req, res) {
     try {
-      const recipe = await LoadService.load('recipe',
-      { WHERE: { id: req.params.id }}
-    )
-      const chefs = await ChefsModel.findAll()
 
-      if(!recipe) return res.status(404).render('notFound.njk', { register })
-
-      return res.render('admin/recipe-edit.njk', { register, recipe, chefs })
-      
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', { register })
+      return res.status(404).render('parts/notFound.njk')
     }
   },
-  async recipePost(req, res){
+  async userEdit(req, res) {
     try {
+      const {id} = req.params
 
-      let { title, chef_id, ingredients, preparation, information } = req.body
-      
-      const keys = Object.keys({ title, ingredients, preparation })
+      let user = await UsersModel.findOne({WHERE: {id}})
+
+      user = {
+        id: user.id,
+        name:user.name,
+        email: user.email,
+        is_admin: user.is_admin
+      }
+
+      return res.render('admin/user-edit.njk', {user, register })
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('parts/notFound.njk')
+    }
+  },
+  async userPut(req, res) {
+    try {
+      let {id, name, email, is_admin} = req.body
+
+      const keys = Object.keys({ name, email })
 
       for(key of keys){
         if(req.body[key] == "")
-          return res.redirect('/admin/recipes/create')
+        return res.redirect(`/admin/users/${id}/edit`)
       }
 
-      if(req.files.length === 0)
-        return res.redirect('/admin/recipes/create')
+      //validar formato de email no backend e front-end
+      is_admin === "on"? is_admin = true : is_admin = false
 
-      ingredients = isString(ingredients)
-      preparation = isString(preparation)
+      await UsersModel.saveUpdate(id, {name, email, is_admin})
 
-      const recipe_id = await RecipeModel.saveCreate({
-        title,
-        chef_id,
-        ingredients: ingredients.filter( item => item != ''),
-        preparation: preparation.filter( item => item != ''),
-        information: information.trim()
-      })
+      return res.redirect(`/admin/users`)
 
-      const filesPromise = req.files.map(async file => {
-        const file_id = await FilesModel.saveCreate({ name: file.filename, path: file.path })
-        RecipeFileModel.saveCreate({file_id, recipe_id})
-      })
-      
-      await Promise.all(filesPromise)
-
-      return res.redirect('/admin/recipes')
-      
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk')
     }
   },
-  async recipePut(req, res){
-    try {
-      let { id ,title, chef_id, ingredients, preparation, information } = req.body
-
-      const keys = Object.keys({ title, ingredients, preparation })
-      
-      for(key of keys){
-        if(req.body[key] == ""){
-          return res.redirect(`/admin/recipes/${id}/edit`)
-        }
-      }
-
-      if (req.files.length != 0) {
-        const filesPromise = req.files.map(async file => {
-          const file_id = await FilesModel.saveCreate({ name: file.filename, path: file.path })
-          await RecipeFileModel.saveCreate({file_id, recipe_id: id})
-        })
-      
-        await Promise.all(filesPromise)
-      }
-
-      if (req.body.removed_files) {
-        const recipe = await LoadService.load('recipe', { WHERE: { id }})
-        const filesLength = recipe.files.length
-
-        let removedFiles = req.body.removed_files.split(",")
-        const lastIndex = removedFiles.length - 1
-        removedFiles.splice(lastIndex, 1)
-
-        if(filesLength === removedFiles.length){
-          return res.redirect(`/admin/recipes/${id}/edit`)
-        }
-  
-        const removedFilesPromise = removedFiles.map(async fileID => {
-          const file = await FilesModel.find(fileID)
-          unlinkSync(file.path)
-          FilesModel.delete(fileID)
-        })
-
-        await Promise.all(removedFilesPromise)
-      }
-
-      ingredients = isString(ingredients)
-      ingredients = ingredients.filter( item => item != '')
-      
-      preparation = isString(preparation)
-      preparation = preparation.filter( item => item != '')
-
-      if(!ingredients.length || !preparation.length ){
-          return res.redirect(`/admin/recipes/${id}/edit`)
-      }
-
-      information = information.trim()
-
-      await RecipeModel.saveUpdate(id, {title, chef_id, ingredients, preparation, information })
-
-      return res.redirect(`/admin/recipes/${id}`)
-      
-    } catch (err) {
-      console.error(err);
-      return res.status(404).render('notFound.njk', {register})
-    }
-  },
-  async recipeDelete(req, res){
+  async userDelete(req, res) {
     try {
       const { id } = req.body
 
-      let recipe_files = await RecipeFileModel.findAll({WHERE:{recipe_id: id}})
-      
-      const removedFilesPromise = recipe_files.map( async rep_file => {
-        const file = await FilesModel.find(rep_file.file_id)
-        unlinkSync(file.path)
-        FilesModel.delete(file.id) 
-      })
+      await UsersModel.delete(id)
 
-      await Promise.all(removedFilesPromise)
-      
-      await RecipeModel.delete(id)
-
-      return res.redirect('/admin/recipes') 
-
+      return res.redirect('/admin/users')
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk')
     }
   },
 
@@ -202,7 +118,7 @@ module.exports = {
       return res.render('admin/chefs.njk', {register , chefs })
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
   },
   chefCreate(req,res){
@@ -210,7 +126,7 @@ module.exports = {
       return res.render('admin/chef-create.njk', { register })
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
   },
   async chefShow(req,res){
@@ -223,7 +139,7 @@ module.exports = {
       
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
   },
   async chefEdit(req,res){
@@ -234,7 +150,7 @@ module.exports = {
       return res.render('admin/chef-edit.njk', {chef, register})
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
   },
   async chefPost(req,res){
@@ -254,7 +170,7 @@ module.exports = {
 
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
   },
   async chefPut(req,res){
@@ -274,7 +190,7 @@ module.exports = {
 
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
     
   },
@@ -300,8 +216,7 @@ module.exports = {
 
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
   }
-  
 }

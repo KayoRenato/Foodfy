@@ -11,7 +11,7 @@ module.exports = {
       return res.render('index.njk', {register , recipes: recipes.slice(0,6)})
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
   },
   async chefs(req,res){
@@ -21,7 +21,7 @@ module.exports = {
       return res.render('chefs.njk', {register, chefs})
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
   },
   about(req,res) {
@@ -29,7 +29,7 @@ module.exports = {
       return res.render('about.njk')
     } catch (err) {
       console.error(err);
-      return res.status(404).render('notFound.njk', {register})
+      return res.status(404).render('parts/notFound.njk', {register})
     }
   }
 }
