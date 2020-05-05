@@ -6,12 +6,12 @@
         <h3> {{ title }}</h3>
         <div class="button-container">
           <input class="button delete" value="Deletar" onclick="document.form1.submit()">
-          <input class="button" value="Salvar" onclick="document.form2.submit()">
+          <input class="button" value="Salvar" onmouseover="Validate.allFields()" onclick="document.form2.submit()">
        </div>
       {% elif 'Cri' in title %}
         <h3> {{ title }}</h3>
         <div class="button-container">
-          <input class="button" value="Salvar" onclick="document.form1.submit()">
+          <input class="button" value="Salvar"  onmouseover="Validate.allFields()" onclick="document.form1.submit()">
         </div>
       {% elif 'recipe-show' == classes %}
         <h3>Receita: {{ title }}</h3>

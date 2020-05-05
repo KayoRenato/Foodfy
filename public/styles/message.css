@@ -1,0 +1,60 @@
+.error{
+  width: 350px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 12vh;
+  right: 20vw;
+
+  z-index: 10;
+
+  background: #DC4747;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  border-radius: 4px;
+
+  animation: createElement 600ms;
+
+}
+
+.error p{
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-family: Helvetica-Bold;
+  color: #FFFFFF;
+
+}
+
+input[type=email].border_error:focus{
+  outline: none;
+  background: #FFFFFF;
+  border: 2px solid #FF3131;
+  border-radius: 4px;
+  border-radius: 4px;
+
+}
+
+@keyframes createElement{
+  0%{
+    opacity: 0;
+  }
+  40%{
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+.card input[type=text].field_empty_error, 
+.card input[type=email].field_empty_error, 
+.card-content textarea.field_empty_error, 
+#photos-upload.field_empty_error i{
+  background: #FFFFFF;
+  border: 2px solid #FF3131;
+
+}
