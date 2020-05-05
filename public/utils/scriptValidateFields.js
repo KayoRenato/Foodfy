@@ -22,6 +22,7 @@ const Validate = {
 
     div.appendChild(tex)
     wrapper.appendChild(div)
+
     if(input)
       input.focus()
   },

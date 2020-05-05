@@ -26,19 +26,9 @@ module.exports = {
   async userPost(req, res) {
     try {
       let { name, email, is_admin } = req.body,
-        password = 123 // Substituir pelo envio de hash por email para o usuário criar sua senha.
-
-        const keys = Object.keys({ name, email })
-
-      //validar formato de email no backend e front-end
-      for(key of keys){
-        if(req.body[key] == "")
-          return res.render('admin/user-create.njk', { register })
-      }
+      password = 123 // Substituir pelo envio de hash por email para o usuário criar sua senha.
 
       is_admin === "on"? is_admin = true : is_admin = false
-
-      //validar no backend se o e-mail já tá cadastrado.
 
       await UsersModel.saveCreate({name, email, password, is_admin})
       
@@ -79,14 +69,6 @@ module.exports = {
     try {
       let {id, name, email, is_admin} = req.body
 
-      const keys = Object.keys({ name, email })
-
-      for(key of keys){
-        if(req.body[key] == "")
-        return res.redirect(`/admin/users/${id}/edit`)
-      }
-
-      //validar formato de email no backend e front-end
       is_admin === "on"? is_admin = true : is_admin = false
 
       await UsersModel.saveUpdate(id, {name, email, is_admin})
@@ -157,13 +139,6 @@ module.exports = {
     try {
       const { name, avatar_url } = req.body
 
-      const keys = Object.keys({ name, avatar_url })
-
-      for(key of keys){
-        if(req.body[key] == "")
-          return res.render('admin/chef-create.njk', { register })
-      }
-
       await ChefsModel.saveCreate({name, avatar_url})
       
       return res.redirect('/admin/chefs')
@@ -176,13 +151,6 @@ module.exports = {
   async chefPut(req,res){
     try {
       const {id, name, avatar_url} = req.body
-
-      const keys = Object.keys({ name, avatar_url })
-
-      for(key of keys){
-        if(req.body[key] == "")
-        return res.redirect(`/admin/chefs/${id}/edit`)
-      }
 
       await ChefsModel.saveUpdate(id, {name, avatar_url})
 
