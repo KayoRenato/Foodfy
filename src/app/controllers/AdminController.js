@@ -30,9 +30,9 @@ module.exports = {
 
       is_admin === "on"? is_admin = true : is_admin = false
 
-      await UsersModel.saveCreate({name, email, password, is_admin})
+      const user = await UsersModel.saveCreate({name, email, password, is_admin})
       
-      return res.redirect('/admin/users')
+      return res.render('admin/user-edit.njk', {register, user ,done: "Usuário cadastrado com sucesso!"})
     } catch (err) {
       console.error(err);
       return res.status(404).render('parts/notFound.njk')
@@ -71,9 +71,9 @@ module.exports = {
 
       is_admin === "on"? is_admin = true : is_admin = false
 
-      await UsersModel.saveUpdate(id, {name, email, is_admin})
+      const user = await UsersModel.saveUpdate(id, {name, email, is_admin})
 
-      return res.redirect(`/admin/users`)
+      return res.render('admin/user-edit.njk', {register, user, done: "Usuário atualizado com sucesso!"})
 
     } catch (err) {
       console.error(err);
@@ -111,10 +111,25 @@ module.exports = {
       return res.status(404).render('parts/notFound.njk', {register})
     }
   },
+  async chefPost(req,res){
+    try {
+      const { name, avatar_url } = req.body
+
+      const chef = await ChefsModel.saveCreate({name, avatar_url})
+
+      return res.render('admin/chef-show.njk', {register, chef, done:'Chef criado com sucesso!'})
+
+    } catch (err) {
+      console.error(err);
+      return res.status(404).render('parts/notFound.njk', {register})
+    }
+  },
   async chefShow(req,res){
     try {
       const { id } = req.params
-      const chef = await ChefsModel.totalRecipes(id)
+      let chef = await ChefsModel.totalRecipes({WHERE:{ 'chefs.id': id }})
+      chef = chef[0]
+      
       const recipes_chef = await LoadService.load('recipes', {WHERE: { chef_id: id }})
 
       return res.render('admin/chef-show.njk', {chef, recipes_chef, register})
@@ -135,26 +150,15 @@ module.exports = {
       return res.status(404).render('parts/notFound.njk', {register})
     }
   },
-  async chefPost(req,res){
-    try {
-      const { name, avatar_url } = req.body
-
-      await ChefsModel.saveCreate({name, avatar_url})
-      
-      return res.redirect('/admin/chefs')
-
-    } catch (err) {
-      console.error(err);
-      return res.status(404).render('parts/notFound.njk', {register})
-    }
-  },
   async chefPut(req,res){
     try {
       const {id, name, avatar_url} = req.body
 
-      await ChefsModel.saveUpdate(id, {name, avatar_url})
+      const chef = await ChefsModel.saveUpdate(id, {name, avatar_url})
 
-      return res.redirect(`/admin/chefs/${id}`)
+      const recipes_chef = await LoadService.load('recipes', {WHERE:{chef_id: id}})
+
+      return res.render('admin/chef-show.njk', {register, chef, recipes_chef, done:'Chef atualizado com sucesso!'})
 
     } catch (err) {
       console.error(err);

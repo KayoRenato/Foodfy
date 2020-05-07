@@ -1,54 +1,70 @@
 const UsersModel = require('../../models/UsersModel')
 const register = 'user'
 
-async function post(req, res, next) {
-  let { name, email, is_admin } = req.body
-
-  const keys = Object.keys({ name, email })
+function filledFiled(objFields, body){
+  let error = null
+  const keys = Object.keys(objFields)
 
   for(key of keys){
-    if(req.body[key] == "")
+    if(body[key] == "")
+      return error = "Prencha todos os campos."
+  }
+  
+  return error
+}
 
-      return res.render('admin/user-create.njk', { register })
+async function isMail(email, id){
+  let error = null
+  const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ 
+
+  if(!email.match(mailFormat)){
+    return error = "E-mail Inválido!"
   }
 
   const haveUser = await UsersModel.findOne({WHERE: {email}})
 
-  if(haveUser){
-    user = {
+  if(!!haveUser && haveUser.id != id){
+    return error = "E-mail já cadastrado."
+  }
+
+  return error
+}
+
+async function post(req, res, next) {
+  let user = { name, email, is_admin } = req.body, error = null
+
+  if(error = filledFiled({name, email}, req.body)){
+    return res.render('admin/user-create.njk', { register, user, error })
+  }
+
+  if(error = await isMail(email, null)){
+     user = {
       name,
       is_admin
     }
 
-    return res.render('admin/user-create.njk', {register ,user })
-    //enviar mensagem de erro para o frontend
+    return res.render('admin/user-create.njk', { register, user, error })
   }
 
   next()
 }
 
 async function put(req, res, next) {
-  let { id, name, email, is_admin } = req.body
+  let user = { id, name, email, is_admin } = req.body, error = null
 
-  const keys = Object.keys({ name, email })
+  if(error = filledFiled({name, email}, req.body))
+    return res.render('admin/user-edit.njk', { register, user, error})
 
-  for(key of keys){
-    if(req.body[key] == "")
-
-      return res.redirect(`/admin/users/${id}/edit`)
-  }
-
-  const haveUser = await UsersModel.findOne({WHERE: {email}})
-
-  if(haveUser){
-    user = {
+  if(error = await isMail(email, id)){
+    const {email} = await UsersModel.findOne({WHERE:{ id }}) 
+    user ={
       id,
       name,
+      email,
       is_admin
     }
 
-    return res.render('admin/user-edit.njk', {register , user })
-    //enviar mensagem de erro para o frontend
+    return res.render('admin/user-edit.njk', { register, user, error})
   }
 
   next()

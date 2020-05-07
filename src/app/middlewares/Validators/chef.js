@@ -1,27 +1,46 @@
 const ChefsModel = require('../../models/ChefsModel')
+const LoadService = require('../../services/LoadService')
+
 const register = 'user'
+
+function filledFiled(objFields, body){
+  let error = null
+  const keys = Object.keys(objFields)
+
+  for(key of keys){
+    if(body[key] == "")
+      return error = "Prencha todos os campos."
+  }
+  
+  return error
+}
+
+async function haveChef(name, id){
+  let error = null
+
+  const haveChef = await ChefsModel.findOne({WHERE: {name}})
+
+  if(!!haveChef && haveChef.id != id){
+    return error = "Chef já cadastrado."
+  }
+
+  return error
+}
 
 async function post(req, res, next) {
 
-  const { name, avatar_url } = req.body
+  let chef = { name, avatar_url } = req.body
 
-  const keys = Object.keys({ name, avatar_url })
-
-  for(key of keys){
-    if(req.body[key] == "")
-      return res.render('admin/chef-create.njk', { register })
-  }
+  if(error = filledFiled({ name, avatar_url }, req.body))
+    return res.render('admin/chef-create.njk', {register, chef, error})
   
-  // Validar formato png, jpeg e jpg no backend e frontend. caminho deve começar com  "https://" e terminar com umas das 3 extensões
-  const haveChef = await ChefsModel.findOne({WHERE: {name}})
 
-  if(haveChef){
+  if(error = await haveChef(name, null)){
     chef = {
       avatar_url
     }
 
-    return res.render('admin/chef-create.njk', { chef })
-    //enviar mensagem de erro para o frontend
+    return res.render('admin/chef-create.njk', {register, chef, error})
   }
 
   next()
@@ -29,25 +48,17 @@ async function post(req, res, next) {
 
 async function put(req, res, next) {
 
-  const {id, name, avatar_url} = req.body
+  let chef = {id, name, avatar_url} = req.body
 
-  const keys = Object.keys({ name, avatar_url })
+  if(error = filledFiled({name, avatar_url}, req.body))
+    return res.render('admin/chef-edit.njk', {register, chef, error})
+  
+  if(error = await haveChef(name, id)){
+    chef = await ChefsModel.totalRecipes({WHERE:{name}})
+    chef = chef[0]
+    const recipes_chef = await LoadService.load('recipes', {WHERE:{chef_id: chef.id}})
 
-  for(key of keys){
-    if(req.body[key] == "")
-    return res.redirect(`/admin/chefs/${id}/edit`)
-  }
-
-  // Validar formato png, jpeg e jpg no backend e frontend. caminho deve começar com  "https://" e terminar com umas das 3 extensões
-  const haveChef = await ChefsModel.findOne({WHERE: {name}})
-
-  if(haveChef){
-    chef = {
-      avatar_url
-    }
-
-    return res.render('admin/chef-create.njk', { chef })
-    //enviar mensagem de erro para o frontend
+    return res.render('admin/chef-show.njk',{register, chef, recipes_chef, error})
   }
 
   next()

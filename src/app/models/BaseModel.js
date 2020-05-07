@@ -60,11 +60,11 @@ const Base = {
           
       const query = `INSERT INTO ${this.table} (${keys.join(",")})
         VALUES (${values.join(",")})
-        RETURNING id`
+        RETURNING *`
 
       const results = await db.query(query)
       
-      return results.rows[0].id
+      return results.rows[0]
     } catch (err) {
       console.error(err)
     }

@@ -17,12 +17,14 @@
     {% block header %}{% endblock %}
 
   <div class="wrapper">
+
+    {% include "parts/message.njk" %}
     
     {% block main%}{% endblock %}
    
   </div>
 
-   {% include "parts/footer.njk" %}
+    {% include "parts/footer.njk" %}
 
 </body>
 

@@ -26,15 +26,23 @@
             style="background-image: url({{chef.avatar_url}})"
           ></div>
           <h2>{{chef.name}}</h2>
-          <p class='contribution'> {{chef.total_recipes}} receitas</p>
+          <p class='contribution'> {% if chef.total_recipes > 1 %}
+            {{chef.total_recipes}} receitas
+          {% elif chef.total_recipes == 1 %}
+            {{chef.total_recipes}} receita
+          {% else %}
+            Nenhuma receita cadastrada
+          {% endif %}</p>
         </div>
 
-        <div class="recipes_chef content">
-          {% call carte.render(recipes_chef, register ) %}
-            <h2>Receitas</h2>
-          {% endcall %}
-        </div>  
-
+        {% if chef.total_recipes > 0 %}
+          <div class="recipes_chef content">
+            {% call carte.render(recipes_chef, register ) %}
+              <h2>Receitas</h2>
+            {% endcall %}
+          </div>  
+        {% endif %}
+       
       </div>  
       
     {% endcall %}

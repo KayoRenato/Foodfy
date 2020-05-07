@@ -8,18 +8,19 @@ const Validate = {
     if(results.error){
       Validate.displayError(input, results.error)
     }
-
+    
+    input.focus()
   },
   displayError(input, error){
     const wrapper = document.querySelector('.wrapper')
     const div = document.createElement('div')
     const tex = document.createElement('p')
-    tex.innerHTML = error
     div.classList.add('error')
+    tex.innerHTML = error
     
     if(input)
-      input.classList.add('border_error')
-
+    input.classList.add('border_error')
+    
     div.appendChild(tex)
     wrapper.appendChild(div)
 
@@ -55,7 +56,7 @@ const Validate = {
     const items = document.querySelectorAll('.card-content input[type=text], .card-content input[type=email], .card-content input[type=file]')
     const imgs = document.querySelectorAll('#photos-preview img')
 
-    let error = null, inputs = true, previews = true
+    let error = null, inputs = true
     
     const gallery = imgs.length
 
@@ -76,7 +77,7 @@ const Validate = {
     if(!inputs){
       error = `Por favor, prencha todos os campos!`
 
-      Validate.displayError(null,error)
+      Validate.displayError(null, error)
 
       setTimeout(() => {Validate.clearErrors()}, 2000)
     }

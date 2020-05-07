@@ -16,7 +16,7 @@ module.exports = {
   },
   async chefs(req,res){
     try {
-      const chefs = await ChefsModel.listChefs()
+      const chefs = await ChefsModel.totalRecipes()
 
       return res.render('chefs.njk', {register, chefs})
     } catch (err) {

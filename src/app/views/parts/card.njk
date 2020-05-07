@@ -16,12 +16,13 @@
       {% elif 'recipe-show' == classes %}
         <h3>Receita: {{ title }}</h3>
         <div class="button-container">
-          <a href="{{id}}/edit" class="button">Editar Receita</a>
+          <a href="{{id}}/edit" class="button">Editar Receita</a> 
         </div>
       {% elif 'chef-show' == classes %}
         <h3>Chef: {{ title }}</h3>
         <div class="button-container">
           <a href="{{id}}/edit" class="button">Editar Chef</a>
+          {# resolver problema do validator.chef > Put #}
         </div>
       {% else %}
       {% endif %}
