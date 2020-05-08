@@ -49,12 +49,28 @@
   margin-left: 10px;
 }
 
+.button-list{
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 30px;
+}
+
+.button.add{
+  width: auto;
+  height: 36px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .card-header h3{
   font-size: 24px;
   color: #111111;
 }
 
-.card-header .button {
+.card-header .button, .button{
   width: 120px;
   padding: 8px 20px;
   background-color: #6558C3 ;
@@ -71,7 +87,7 @@
   transition: all 400ms;
 }
 
-.card-header .button:hover {
+.card-header .button:hover, .button:hover {
   background-color: rgb(114, 95, 255) ;
   box-shadow: 1px 1px 2px 2px #a0a0a0c0;
 }

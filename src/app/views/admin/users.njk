@@ -4,14 +4,18 @@
 
 {% block header %}
   {% call header.render(register) %}
-    <a href="/recipes">RECEITAS</a>
-    <a href="/chefs">CHEFS</a>
+    <a href="../user/recipes">RECEITAS</a>
+    <a href="chefs">CHEFS</a>
+    <a href="users">USUÁRIOS</a>
   {% endcall %}
 {% endblock %}
 
 {% block main %}
   <main>
-    <h2>Gerenciar Usuários</h2>
+    <div class="button-list">
+      <h2>Gerenciar Usuários</h2>
+      <a href="users/create" class="button add">Novo Usuário</a>
+    </div>
     <div class="users list">
       {%for user in users %}
         <div class="card">

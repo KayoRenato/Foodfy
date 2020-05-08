@@ -2,6 +2,8 @@ const UsersModel = require('../models/UsersModel')
 const ChefsModel = require('../models/ChefsModel')
 const LoadService = require('../services/LoadService')
 
+const Mailer = require('../lib/mailer')
+
 const register = 'user'
 
 module.exports = {
@@ -31,8 +33,50 @@ module.exports = {
       is_admin === "on"? is_admin = true : is_admin = false
 
       const user = await UsersModel.saveCreate({name, email, password, is_admin})
+
+      //ajustar link para acessar rota de criação de senha.
+      await Mailer.sendMail({
+        to: email,
+        from: 'no-reply@foodyfy.com',
+        subject: 'Usuário Criado - Validação de registro',
+        html: `
+        <div style="max-width: 500px;
+            margin: 50px auto;">
+
+        <h2 style="text-align:center;">Seu conta foi criada em nossos serviços!</h2>
+        <p style="text-align:center;"> Para validar seu registro, basta você acessar o link e criar sua senha.</p>
+        <p style="text-align:center;"> Assim, você poderá aproveitar todos os benefícios de nossa plataforma.</p>
+        </br></br>
+        <div style=
+             "
+              width: 100%;
+              text-align: center;"> 
+                <a style= 
+                  "
+                  text-decoration: none;
+                  background: #6558C3;
+                  border: 0px solid #271d72;
+                  border-width: 0px 0px 4px 0px;
+                  padding: 10px 20px;
+                  color: #fff;
+                  font-weight: 900;
+                  font-style: normal
+                "href="#" target="_blank">
+                  CRIAR SENHA
+                </a>
+          </div>
+        <p style="margin-top: 20px; font-size: 10; color: #777; text-align:center;"> Essa validação estará ativa por 5 minutos. </p>
+        </br></br>
+        <p style="text-align:center">Atensiosamente,</p>
+        <p style="text-align:center;">
+          <img src="https://www.imagemhost.com.br/images/2020/05/07/logoBlack.png" alt="logoBlack.png" border="0" width="130" height="40"/>
+        </p>
+
+        </div>
+        `
+      })
       
-      return res.render('admin/user-edit.njk', {register, user ,done: "Usuário cadastrado com sucesso!"})
+      return res.render('admin/user-edit.njk', {register, user ,done: "Usuário cadastrado com sucesso! Token enviado para o e-mail."})
     } catch (err) {
       console.error(err);
       return res.status(404).render('parts/notFound.njk')

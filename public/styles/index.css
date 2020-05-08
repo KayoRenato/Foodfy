@@ -36,13 +36,13 @@ body{
 header {
   max-width: 940px;
   display: grid;
-  grid-template-columns: 210px 1fr 350px;
+  grid-template-columns: 150px 1fr 1fr 100px;
   margin: 27px auto;
   align-items: center;
 }
 
 header .search{
-  justify-self: end;
+  justify-self: center;
 
 }
 
@@ -69,7 +69,7 @@ a {
 
 a.active {
   font-weight: bold;
-  border-bottom: 1px solid;
+  border-bottom: 2px solid rgb(114, 95, 255);
 }
 
 .wrapper {
@@ -88,17 +88,19 @@ header a.logo{
 }
 
 .header.public .menu a{
-  margin-right: 30px;
+  margin-right: 20px;
   font-size: 16px;
   color: var(--color-first);
+}
 
+.header.public .menu a:hover, .header.user .menu a:hover{
+  border-bottom: 2px solid rgb(114, 95, 255);
 }
 
 .header.user .menu a{
   margin-right: 30px;
   font-size: 16px;
   color: var(--color-second);
-
 }
 
 main h2 {
@@ -131,12 +133,12 @@ header .button {
 }
 
 header .button:hover {
-  background-color: rgb(114, 95, 255);
+  background-color: rgb(35, 14, 190);
   box-shadow: 0px 1px 2px .1;
 }
 
 header input[type=text]{
-  width: 200px;
+  width: 300px;
   padding: 8px 0 8px 25px;
   
   border: 1px solid var(--color-bord-shadow);
@@ -163,3 +165,49 @@ header i{
   color: rgb(163, 163, 163);
 }
 
+.login{
+  display: flex;
+  justify-self: end;
+  width: auto;
+  height: auto;
+}
+
+.header.public .login a{
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: var(--color-first);
+}
+
+.header.user .login a{
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: var(--color-second);
+}
+
+.login a span{
+  margin-left: 4px;
+  font-size: 16px;
+}
+
+.login a:hover span{ 
+  font-weight: bold;
+  border-bottom: 2px solid rgb(114, 95, 255);
+}
+
+.header.public .login svg{
+  fill: var(--color-first);
+  width: 30px;
+  height: 30px;
+}
+
+.header.user .login svg{
+  fill: var(--color-second);
+  width: 30px;
+  height: 30px;
+}
+
+.header.public .login a:hover svg, .header.user .login a:hover svg {
+  fill: rgb(114, 95, 255);
+}
