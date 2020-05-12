@@ -1,21 +1,22 @@
-{% extends "parts/layout.njk" %}
+{% extends "parts/layoutLogin.njk" %}
 
-{% import "parts/header.njk" as header %} 
-{% import "parts/card.njk" as card %} 
+{% import "parts/cardSession.njk" as card %} 
 
   {% block head %}
     <title>FoodFy - Login </title>
   {% endblock %}
 
-  {% block header %}
-    {% call header.render(register) %}
-      <a href="/recipes">RECEITAS</a>
-      <a href="/chefs">CHEFS</a>  
-    {% endcall %}
-  {% endblock %}
-
   {% block main %}
 
+    {% call card.render('Iniciar Sessão', 'user-login' ) %}
+      <form action="/user/login" method="post" name="login">
+        {% include "session/fields.njk" %}
+        <div class="actions">
+          <a href="/user/forgot-password">Perdeu a senha?</a>
+          <button class="button" onclick="Validate.allFieldsSession(event)" type="submit">Acessar</button>
+        </div>
+      </form>
+    {% endcall %}
     
 
   {% endblock %}

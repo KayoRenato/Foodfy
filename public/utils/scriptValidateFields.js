@@ -9,7 +9,7 @@ const Validate = {
       Validate.displayError(input, results.error)
     }
     
-    input.focus()
+    // input.focus()
   },
   displayError(input, error){
     const wrapper = document.querySelector('.wrapper')
@@ -53,7 +53,7 @@ const Validate = {
     }
   },
   allFields(){
-    const items = document.querySelectorAll('.card-content input[type=text], .card-content input[type=email], .card-content input[type=file]')
+    const items = document.querySelectorAll('.card-content input[type=text], .card-content input[type=email], .card-content input[type=file], input[type=email], input[type=password]')
     const imgs = document.querySelectorAll('#photos-preview img')
 
     let error = null, inputs = true
@@ -80,6 +80,26 @@ const Validate = {
       Validate.displayError(null, error)
 
       setTimeout(() => {Validate.clearErrors()}, 2000)
+    }
+
+  },
+  allFieldsSession(event){
+    const items = document.querySelectorAll('input[type=email], input[type=password]')
+    let error = null, inputs = true
+    
+    for(item of items){
+      if(item.value == ""){
+          item.classList.add('field_empty_error')
+          inputs = false
+      }
+    }
+
+    if(!inputs){
+      error = `Por favor, prencha todos os campos!`
+
+      Validate.displayError(null, error)
+
+      event.preventDefault()
     }
 
   }

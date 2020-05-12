@@ -78,6 +78,10 @@ a.active {
   margin: 50px auto;
 }
 
+.wrapper.session {
+  max-width: 500px;
+}
+
 header img{
   margin-right: 120px;
 }

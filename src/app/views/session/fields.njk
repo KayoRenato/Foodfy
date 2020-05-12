@@ -1,0 +1,50 @@
+<div>
+  <div>E-mail</div>
+  <div class = "input">
+      <input 
+        type="email"
+        name="email"
+        placeholder="Digite o seu e-mail"
+        value="{{user.email}}"
+        onblur="Validate.apply(this,'isEmail')"
+        {# required="required"
+        oninvalid="this.setCustomValidity('Preencha seu E-mail!')"
+        onchange="this.setCustomValidity('')" #} 
+
+      >
+  </div>
+</div>
+
+<div>
+  <div>Senha</div>
+  <div class = "input">
+      <input 
+        type="password"
+        name="password"
+        placeholder="Digite sua senha"   
+        {# required="required"
+        oninvalid="this.setCustomValidity('Insira sua Senha!')"
+        onchange="this.setCustomValidity('')" #}
+      >
+  </div>
+</div>
+
+{% if token %}
+
+  <div class="item">
+    <div>Confirmar Senha</div>
+    <div class = "input">
+      <input 
+      type="password"
+      name="passwordCheck"
+      placeholder="Repita a senha"
+      required="required"
+      oninvalid="this.setCustomValidity('Repita a Senha!')"
+      onchange="this.setCustomValidity('')"
+      >
+    </div>
+  </div>
+
+  <input type="hidden" name="token" value="{{token}}">
+
+{% endif %}

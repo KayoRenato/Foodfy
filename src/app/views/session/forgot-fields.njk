@@ -1,0 +1,16 @@
+<div>
+  <div>E-mail</div>
+  <div class = "input">
+      <input 
+        type="email"
+        name="email"
+        placeholder="Digite seu e-mai para recuperar sua senha"
+        value="{{user.email}}"
+        onblur="Validate.apply(this,'isEmail')"
+        {# required="required"
+        oninvalid="this.setCustomValidity('Preencha seu E-mail!')"
+        onchange="this.setCustomValidity('')" #} 
+
+      >
+  </div>
+</div>

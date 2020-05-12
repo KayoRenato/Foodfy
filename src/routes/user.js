@@ -4,7 +4,19 @@ const routes = express.Router()
 const multer = require('../app/middlewares/multer')
 
 const UserController = require("../app/controllers/UserController")
+const SessionController = require("../app/controllers/SessionController")
 const ProfileController = require("../app/controllers/ProfileController")
+
+// LOGIN AND LOGOUT
+routes.get('/login', SessionController.loginForm)
+routes.post('/login', SessionController.login)
+routes.post('/logout', SessionController.logout)
+
+// PASSWORD
+routes.get('/forgot-password', SessionController.forgotForm) //solicitar reset
+routes.post('/forgot-password', SessionController.forgot) //form para inserir token enviado por e-mail para reset de senha 
+routes.get('/password-reset', SessionController.resetForm) // enviar solicitação (irá validar e se estiver ok enviará e-mail com token)
+routes.post('/password-reset', SessionController.reset) //validação do token e reset de senha
 
 routes.get('/profile', ProfileController.index) // Mostrar o formulário com dados do usuário logado
 routes.put('/profile', ProfileController.put)// Atualizar dados usuário

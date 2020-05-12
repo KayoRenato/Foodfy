@@ -8,7 +8,7 @@ const ValidatorUser = require("../app/middlewares/Validators/user")
 const ValidatorChef = require("../app/middlewares/Validators/chef")
 
 // Rotas de perfil de um usuário logado
-routes.get('/profile', ProfileController.index) // Mostrar o formulário com dados do usuário logado
+routes.get('/profile', ProfileController.index) // Mostrar o formulário com dados do usuário admin logado (usuário admin, apenas ele pode editar a sí)
 routes.put('/profile', ProfileController.put)// Atualizar dados usuário
 
 // Rotas que o administrador irá acessar para gerenciar usuários

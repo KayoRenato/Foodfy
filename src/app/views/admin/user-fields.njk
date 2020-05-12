@@ -20,6 +20,9 @@
       placeholder="Digite o e-mail"
       value="{{user.email}}"
       onblur= "Validate.apply(this, 'isEmail')"
+      required="required"
+      oninvalid="this.setCustomValidity('Preencha o E-mail!')"
+      onchange="this.setCustomValidity('')"
     >
     </div>
   </div>

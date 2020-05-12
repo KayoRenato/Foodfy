@@ -83,7 +83,9 @@ input[type=email].border_error:focus{
 .card input[type=text].field_empty_error, 
 .card input[type=email].field_empty_error, 
 .card-content textarea.field_empty_error, 
-#photos-upload.field_empty_error i{
+#photos-upload.field_empty_error i,
+input[type=email].field_empty_error,
+input[type=password].field_empty_error{
   background: #FFFFFF;
   border: 2px solid #FF3131;
 
